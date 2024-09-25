@@ -46,7 +46,7 @@ public class CuidadorController {
 
             }
             cuidadorRepository.save(cuidador);
-            System.out.println("Cuidador salvo com sucesso" + cuidador.getName() + "" + cuidador.getImagem());
+            System.out.println("Cuidador salvo com sucesso" + cuidador.getNome() + "" + cuidador.getImagem());
             return home();
         } catch (Exception e) {
             mv.addObject("msgERRo", e.getMessage());
