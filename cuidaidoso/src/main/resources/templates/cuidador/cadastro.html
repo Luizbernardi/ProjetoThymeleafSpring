@@ -34,11 +34,11 @@
 <body class="overflow-hidden">
     <main class=" h-screen flex items-center justify-center">
         <div class="left-10 absolute top-10">
-            <img class="flex align-top h-40" src="../../static/images/logo2.png" alt="Logo Cuidaidoso">
+            <img class="flex align-top h-40" src="/images/logo2.png" alt="Logo Cuidaidoso">
         </div>
         <div class="bg-white max-w-[2000px] shadow-md mx-auto p-20">
             <div class="flex justify-center">
-                <img class="w-60" src="../../static/images/logocadastro.png" alt="Logo cadastro">
+                <img class="w-60" src="/images/logocadastro.png" alt="Logo cadastro">
             </div>
             <form th:action="@{/cuidador/cadastro-cuidador}" th:object="${usuario}" method="post"
                 enctype="multipart/form-data" class="grid grid-cols-2 space-y-2">
