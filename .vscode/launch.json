@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-CuidaidosoApplication<cuidaidoso>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.br.cuidaidoso.CuidaidosoApplication",
+            "projectName": "cuidaidoso",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
