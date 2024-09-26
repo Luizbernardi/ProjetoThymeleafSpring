@@ -14,5 +14,53 @@ body {
 
 .custom-select {
     height: 2.5rem;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.custom-file-input::file-selector-button {
+    display: none;
+    /* Remove o botão padrão do input de arquivo */
+}
+
+
+.custom-file-input::before {
+    content: 'Escolher Foto Perfil';
+    /* Texto personalizado */
+    display: inline-block;
+    background: #ffffff;
+    /* Cor de fundo cinza */
+    color: #374151;
+    /* Cor do texto */
+    border: 1px solid #d1d5db;
+    /* Borda cinza */
+    border-radius: 0.375rem;
+    /* Bordas arredondadas */
+    padding: 0.5rem 1rem;
+    /* Espaçamento interno */
+    width: 100%;
+    /* Largura total menos o padding */
+    text-align: center;
+    /* Centraliza o texto */
+    cursor: pointer;
+    /* Cursor de ponteiro */
+    box-sizing: border-box;
+    /* Inclui a borda e o padding no tamanho total */
+}
+
+.custom-file-input:hover::before {
+    background-color: #d1d5db;
+    /* Cor de fundo cinza mais escura ao passar o mouse */
+}
+
+.custom-file-input:focus::before {
+    outline: none;
+    /* Remove o contorno padrão */
+    border-color: #a5b4fc;
+    /* Cor da borda ao focar */
+    box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.5);
+    /* Sombra ao focar */
+}
+
+.custom-file-input::-webkit-file-upload-button {
+    visibility: hidden;
+    /* Oculta o botão padrão no WebKit */
 }

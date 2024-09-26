@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -36,14 +36,14 @@
         <div class="left-10 absolute top-10">
             <img class="flex align-top h-40" src="/images/logo2.png" alt="Logo Cuidaidoso">
         </div>
-        <div class="bg-white max-w-[2000px] shadow-md mx-auto p-20">
+        <div class="mx-auto my-auto">
             <div class="flex justify-center">
                 <img class="w-60" src="/images/logocadastro.png" alt="Logo cadastro">
             </div>
+            <p class="space-y-2 font-bold">Novo cadastro</p>
             <form th:action="@{/cuidador/cadastro-cuidador}" th:object="${usuario}" method="post"
-                enctype="multipart/form-data" class="grid grid-cols-2 space-y-2">
+                enctype="multipart/form-data" class="grid grid-cols-2">
                 <div class="space-y-2">
-                    <p class="gap-2">Novo cadastro</p>
                     <label for="nome" class="input input-bordered flex items-center gap-2 custom-label">
                         <input type="text" class="grow " autocomplete="off" th:field="*{nome}" id="nome"
                             placeholder="Nome">
@@ -53,27 +53,32 @@
                             id="senha" placeholder="Senha">
                     </label>
                     <label for="genero" class="flex items-center gap-2 custom-label">
-                        <select name="" id="" th:field="*{genero}"
-                            class="select select-bordered w-full max-w-xs custom-select">
+                        <select name="" id="" th:field="*{genero}" class="select select-bordered w-full  custom-select">
+                            <option value="" selected>Gênero</option>
                             <option th:each="genero : ${generos}" th:value="${genero}" th:text="${genero}">
                             </option>
                         </select>
                     </label>
-                    <label for="perfil" class="flex items-center gap-2 custom-label">
-                        <select name="" id="" th:field="*{perfil}"
-                            class="select select-bordered w-full max-w-xs custom-select">
-                            <option th:each="perfil : ${perfils}" th:value="${perfil}" th:text="${perfil}">
-                            </option>
-                        </select>
+                    <label for="telefone" class="input mr-auto  input-bordered flex items-center gap-2 custom-label">
+                        <input type="tel" class="grow" autocomplete="off" th:field="*{telefone}" id="telefone"
+                            placeholder="Telefone" maxlength="11">
                     </label>
                     <div class="flex justify-center space-x-4 mt-8">
                         <button class=" bg-greenlight px-6 py-2 rounded-md text-black font-bold "
                             type="submit">Entrar</button>
                     </div>
                 </div>
-                <div class="space-y-2 space-x-2 mt-8">
+                <div class="space-y-2 space-x-2">
+                    <label for="cpf" class="mx-2 mr-auto input input-bordered flex items-center gap-2 custom-label">
+                        <input type="text" class="grow" autocomplete="off" th:field="*{cpf}" id="cpf" placeholder="Cpf"
+                            oninput="formatCPF(this)" maxlength="11">
+                    </label>
+                    <label for="dataNascimento" class="input input-bordered flex items-center gap-2 custom-label ">
+                        <input type="date" class="grow" autocomplete="off" th:field="*{dataNascimento}"
+                            id="dataNascimento">
+                    </label>
                     <label for="formacao"
-                        class="mx-2 mr-auto input input-bordered flex items-center gap-2 custom-label">
+                        class="mx-2 mr-auto  input input-bordered flex items-center gap-2 custom-label">
                         <input placeholder="Formação" type="text" class="grow" autocomplete="off" th:field="*{formacao}"
                             id="formacao">
                     </label>
@@ -88,8 +93,8 @@
                         <input placeholder="Email" type="text" class="grow" autocomplete="off" th:field="*{email}"
                             id="email">
                     </label>
-                    <label for="imagem" class="mx-2 mr-auto input input-bordered flex items-center gap-2 custom-label">
-                        <input placeholder="Imagem" name="file" type="file" id="arquivo" class="grow"
+                    <label for="imagem" class="mx-2 w-60 mr-auto flex items-center gap-2 custom-label ">
+                        <input name="file" id="imagem" type="file" class="justify-center  w-full custom-file-input"
                             autocomplete="off">
                     </label>
                     <div class="flex justify-center space-x-4 mt-8">
