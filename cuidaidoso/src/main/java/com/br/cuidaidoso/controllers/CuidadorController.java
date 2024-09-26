@@ -42,8 +42,9 @@ public class CuidadorController {
 
         try {
             if (UploadUtil.fazerUploadImagem(imagem)) {
-                cuidador.setImagem(imagem.getOriginalFilename());
-
+                cuidador.setImagem("static/images/imagem-uploads/" + imagem.getOriginalFilename());
+            } else {
+                cuidador.setImagem("static/images/imagem-uploads/images.png");
             }
             cuidador.setPerfil(Perfil.CUIDADOR);
             cuidadorRepository.save(cuidador);
