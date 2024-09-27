@@ -48,6 +48,10 @@
                         <input type="text" class="grow " autocomplete="off" th:field="*{nome}" id="nome"
                             placeholder="Nome">
                     </label>
+                    <label for="username" class="input input-bordered flex items-center gap-2 custom-label">
+                        <input type="text" class="grow " autocomplete="off" th:field="*{username}" id="username"
+                            placeholder="Username">
+                    </label>
                     <label for="senha" class="input input-bordered flex items-center gap-2 custom-label">
                         <input type="password" class="grow form-control" autocomplete="off" th:field="*{senha}"
                             id="senha" placeholder="Senha">
@@ -75,7 +79,7 @@
                     </label>
                     <label for="dataNascimento" class="input input-bordered flex items-center gap-2 custom-label ">
                         <input type="date" class="grow" autocomplete="off" th:field="*{dataNascimento}"
-                            id="dataNascimento">
+                            pattern="\d{2}-\d{2}-\d{4}" id="dataNascimento">
                     </label>
                     <label for="formacao"
                         class="mx-2 mr-auto  input input-bordered flex items-center gap-2 custom-label">

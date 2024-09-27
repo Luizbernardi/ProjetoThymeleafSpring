@@ -39,6 +39,11 @@ public abstract class User {
     private String nome;
 
     @NotNull
+    @Size(min = 3, max = 50, message = "O nome de usuário deve ter entre 3 e 50 caracteres")
+    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "O nome de usuário deve conter apenas letras e números")
+    private String username;
+
+    @NotNull
     @Email(message = "O email deve ser válido")
     @Column(unique = true)
     private String email;
@@ -71,6 +76,7 @@ public abstract class User {
 
     @NotNull
     @Past(message = "A data de nascimento deve ser uma data no passado")
+    @Pattern(regexp = "\\d{2}-\\d{2}-\\d{4}", message = "Formato esperado: DD-MM-YYYY")
     private LocalDate dataNascimento;
 
 }
