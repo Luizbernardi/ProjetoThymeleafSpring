@@ -21,7 +21,7 @@ import lombok.Setter;
 public class AdminLog {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String acao;
     private LocalDateTime horaAcao = LocalDateTime.now();
