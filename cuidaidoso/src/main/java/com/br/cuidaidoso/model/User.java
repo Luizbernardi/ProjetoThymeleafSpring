@@ -2,6 +2,8 @@ package com.br.cuidaidoso.model;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.br.cuidaidoso.enums.Genero;
 import com.br.cuidaidoso.enums.Perfil;
 
@@ -41,6 +43,7 @@ public abstract class User {
     @NotNull
     @Size(min = 3, max = 50, message = "O nome de usuário deve ter entre 3 e 50 caracteres")
     @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "O nome de usuário deve conter apenas letras e números")
+    @Column(unique = true)
     private String username;
 
     @NotNull
@@ -76,7 +79,7 @@ public abstract class User {
 
     @NotNull
     @Past(message = "A data de nascimento deve ser uma data no passado")
-    @Pattern(regexp = "\\d{2}-\\d{2}-\\d{4}", message = "Formato esperado: DD-MM-YYYY")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dataNascimento;
 
 }
