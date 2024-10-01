@@ -16,6 +16,7 @@
                             document.getElementById('uf').value = data.uf;
                             document.getElementById('estado').value = data.estado;
                             document.getElementById('localidade').value = data.localidade;
+                            document.getElementById('bairro').value = data.bairro;
                         } else {
                             alert('CEP não encontrado!');
                         }
@@ -41,8 +42,11 @@
         <label for="estado">Estado:</label>
         <input type="text" id="estado" name="estado" required><br>
 
-        <label for="localidade">Localidade:</label>
+        <label for="localidade">Cidade:</label>
         <input type="text" id="localidade" name="localidade" required><br>
+
+        <label for="bairro">Bairro:</label>
+        <input type="text" id="bairro" name="bairro" required><br>
 
 
         <button type="submit">Cadastrar</button>

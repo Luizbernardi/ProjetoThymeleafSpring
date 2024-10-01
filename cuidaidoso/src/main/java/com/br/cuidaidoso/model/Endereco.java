@@ -27,6 +27,7 @@ public class Endereco {
     private String uf;
     private String estado;
     private String localidade;
+    private String bairro;
 
     @OneToMany(mappedBy = "endereco")
     private List<Cuidador> cuidadores;

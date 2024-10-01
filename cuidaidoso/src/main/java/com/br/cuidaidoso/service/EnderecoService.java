@@ -47,6 +47,7 @@ public class EnderecoService {
         endereco.setUf(response.getUf());
         endereco.setEstado(response.getEstado());
         endereco.setLocalidade(response.getLocalidade());
+        endereco.setBairro(response.getBairro());
         return endereco;
     }
 }
