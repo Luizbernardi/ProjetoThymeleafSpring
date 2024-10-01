@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Endereço</title>
+    <script>
+        function buscarCEP() {
+            const cep = document.getElementById('cep').value;
+            if (cep.length === 8) {
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.erro) {
+                            document.getElementById('uf').value = data.uf;
+                            document.getElementById('estado').value = data.estado;
+                            document.getElementById('localidade').value = data.localidade;
+                        } else {
+                            alert('CEP não encontrado!');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao buscar o CEP:', error);
+                        alert('Erro ao buscar o CEP!');
+                    });
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Cadastro de Endereço</h1>
+    <form th:action="@{/endereco/cadastro-endereco}" method="post">
+        <label for="cep">CEP:</label>
+        <input type="text" id="cep" name="cep" maxlength="8" onblur="buscarCEP()" required><br>
+
+        <label for="uf">UF:</label>
+        <input type="text" id="uf" name="uf" required><br>
+
+        <label for="estado">Estado:</label>
+        <input type="text" id="estado" name="estado" required><br>
+
+        <label for="localidade">Localidade:</label>
+        <input type="text" id="localidade" name="localidade" required><br>
+
+
+        <button type="submit">Cadastrar</button>
+    </form>
+</body>
+
+</html>
