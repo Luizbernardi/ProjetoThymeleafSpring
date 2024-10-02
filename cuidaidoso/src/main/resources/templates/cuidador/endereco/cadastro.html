@@ -59,7 +59,7 @@
 
 <body>
     <header>
-        <nav class="absolute flex items-center justify-between h-20 w-full p-5 bg-greenlight shadow-sm">
+        <nav class="relative  flex items-center justify-between w-full p-5 bg-greenlight shadow-sm">
             <div>
                 <a th:href="@{/home}"><img class="w-48 mx-24" src="/images/Logo.png" /></a>
             </div>
@@ -68,7 +68,7 @@
                     <a th:href="@{/home}">Início</a>
                 </li>
                 <li class="text-black font-bold text-lg">
-                    <a th:href="@{/cuidador/login}">Entrar</a>
+                    <a th:href="@{/login/login}">Entrar</a>
                 </li>
                 <li class="text-black font-bold text-lg">
                     <a th:href="@{/cuidador/cadastro}">Cadastre-se</a>
@@ -76,26 +76,28 @@
             </ul>
         </nav>
     </header>
-    <h1>Cadastro de Endereço</h1>
-    <form th:action="@{/cuidador/cadastro-endereco}" method="post">
-        <input type="hidden" th:value="${cuidadorId}" name="cuidadorId">
-        <label for="cep">CEP:</label>
-        <input type="text" id="cep" name="cep" maxlength="8" onblur="buscarCEP()" required><br>
+    <main class="container mx-auto pt-10 ">
+        <h1>Cadastro de Endereço</h1>
+        <form th:action="@{/cuidador/cadastro-endereco}" method="post">
+            <input type="hidden" th:value="${cuidadorId}" name="cuidadorId">
+            <label for="cep">CEP:</label>
+            <input type="text" id="cep" name="cep" maxlength="8" onblur="buscarCEP()" required><br>
 
-        <label for="uf">UF:</label>
-        <input type="text" id="uf" name="uf" required><br>
+            <label for="uf">UF:</label>
+            <input type="text" id="uf" name="uf" required><br>
 
-        <label for="estado">Estado:</label>
-        <input type="text" id="estado" name="estado" required><br>
+            <label for="estado">Estado:</label>
+            <input type="text" id="estado" name="estado" required><br>
 
-        <label for="localidade">Localidade:</label>
-        <input type="text" id="localidade" name="localidade" required><br>
+            <label for="localidade">Localidade:</label>
+            <input type="text" id="localidade" name="localidade" required><br>
 
-        <label for="bairro">Bairro:</label>
-        <input type="text" id="bairro" name="bairro" required><br>
+            <label for="bairro">Bairro:</label>
+            <input type="text" id="bairro" name="bairro" required><br>
 
-        <button type="submit">Cadastrar</button>
-    </form>
+            <button type="submit">Cadastrar</button>
+        </form>
+    </main>
 </body>
 
 </html>

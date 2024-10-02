@@ -1,6 +1,7 @@
 package com.br.cuidaidoso.model;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -79,7 +80,14 @@ public abstract class User {
 
     @NotNull
     @Past(message = "A data de nascimento deve ser uma data no passado")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
+
+    public int getIdade() {
+        if (this.dataNascimento == null) {
+            return 0;
+        }
+        return Period.between(this.dataNascimento, LocalDate.now()).getYears();
+    }
 
 }

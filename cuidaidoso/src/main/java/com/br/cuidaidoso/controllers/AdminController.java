@@ -16,6 +16,7 @@ import com.br.cuidaidoso.model.Admin;
 import com.br.cuidaidoso.model.Endereco;
 import com.br.cuidaidoso.model.dto.EnderecoRequest;
 import com.br.cuidaidoso.repository.AdminRepository;
+import com.br.cuidaidoso.repository.CuidadorRepository;
 import com.br.cuidaidoso.service.EnderecoService;
 import com.br.cuidaidoso.util.UploadUtil;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,9 @@ public class AdminController {
 
     @Autowired
     private EnderecoService enderecoService;
+
+    @Autowired
+    private CuidadorRepository cuidadorRepository;
 
     @GetMapping("/cadastro")
     public ModelAndView cadastro(Admin admin) {
@@ -88,6 +92,20 @@ public class AdminController {
             System.out.println("Erro ao salvar o endereço: " + e.getMessage());
             return mv;
         }
+    }
+
+    @GetMapping("list-admin")
+    public ModelAndView adminList() {
+        ModelAndView mv = new ModelAndView("admin/list-admin");
+        mv.addObject("admins", adminRepository.findAll());
+        return mv;
+    }
+
+    @GetMapping("/list-cuidadores")
+    public ModelAndView listCuidadores() {
+        ModelAndView mv = new ModelAndView("admin/list-cuidadores");
+        mv.addObject("cuidadores", cuidadorRepository.findAll());
+        return mv;
     }
 
     @GetMapping("/inicio")

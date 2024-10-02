@@ -90,6 +90,13 @@ public class CuidadorController {
         }
     }
 
+    @GetMapping("/list-cuidadores")
+    public ModelAndView listCuidadores() {
+        ModelAndView mv = new ModelAndView("cuidador/list-cuidadores");
+        mv.addObject("cuidadores", cuidadorRepository.findAll());
+        return mv;
+    }
+
     @GetMapping("/inicio")
     public ModelAndView home() {
         ModelAndView mv = new ModelAndView("home/index");
