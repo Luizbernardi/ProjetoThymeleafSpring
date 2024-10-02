@@ -35,23 +35,17 @@
     <header>
         <nav class="absolute flex items-center justify-between h-20 w-full p-5 bg-greenlight shadow-sm">
             <div>
-                <a href="/"><img class="w-48 mx-24" src="/images/Logo.png" /></a>
+                <a th:href="@{/home}"><img class="w-48 mx-24" src="/images/Logo.png" /></a>
             </div>
             <ul class="flex justify-between items-center space-x-5 mr-24">
                 <li class="text-black font-bold text-lg">
-                    <a href="/">Início</a>
+                    <a th:href="@{/home}">Início</a>
                 </li>
                 <li class="text-black font-bold text-lg">
-                    <a href="/#beneficios">Benefícios</a>
+                    <a th:href="@{/cuidador/login}">Entrar</a>
                 </li>
                 <li class="text-black font-bold text-lg">
-                    <a href="/#historia">História</a>
-                </li>
-                <li class="text-black font-bold text-lg">
-                    <a href="/#depoimentos">Depoimentos</a>
-                </li>
-                <li class="text-black font-bold text-lg">
-                    <a href="/#contato">Contato</a>
+                    <a th:href="@{/cuidador/cadastro}">Cadastre-se</a>
                 </li>
             </ul>
         </nav>

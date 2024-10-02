@@ -32,11 +32,11 @@
     <header>
         <nav class="fixed flex items-center justify-between h-20 w-full p-5 bg-[#3b3b3b] bg-opacity-20 shadow-sm">
             <div>
-                <a href="/"><img class="w-48 mx-24" src="/images/Logo.png" /></a>
+                <a th:href="@{/home}"><img class="w-48 mx-24" src="/images/Logo.png" /></a>
             </div>
             <ul class="flex justify-between items-center space-x-5 mr-24">
                 <li class="text-black font-bold text-lg">
-                    <a href="/">Início</a>
+                    <a th:href="@{/home}">Início</a>
                 </li>
                 <li class="text-black font-bold text-lg">
                     <a href="/#beneficios">Benefícios</a>
@@ -73,7 +73,7 @@
                     </p>
                 </div>
                 <div class="absolute bottom-[350px] right-[950px]">
-                    <a href="login.html">
+                    <a th:href="@{/cuidador/login}">
                         <button
                             class="absolute w-[568px] h-[66px] bg-[#7FCDCD] rounded-[12px] text-white text-[32px] font-bold shadow-lg font-roboto">
                             Clique aqui para entrar na plataforma
