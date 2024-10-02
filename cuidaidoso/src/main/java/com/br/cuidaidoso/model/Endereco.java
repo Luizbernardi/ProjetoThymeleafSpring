@@ -32,4 +32,7 @@ public class Endereco {
     @OneToMany(mappedBy = "endereco")
     private List<Cuidador> cuidadores;
 
+    @OneToMany(mappedBy = "endereco")
+    private List<Admin> administradores;
+
 }

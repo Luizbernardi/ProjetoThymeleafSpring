@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,5 +20,8 @@ public class Admin extends User {
 
     @OneToMany(mappedBy = "admin")
     private List<AdminLog> adminLog = new ArrayList<>();
+
+    @ManyToOne
+    private Endereco endereco;
 
 }

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        redlight: '#E55959',
+                        greenlight: '#7FCDCD',
+                        graylight: '#E7E7E7',
+                        graytext: '#D9D9D9',
+                        redbackground: '#EED0D0',
+                        orangetext: '#C25500'
+                    }
+                }
+            }
+        }
+    </script>
+    <title>Cadastro de Admin</title>
+</head>
+
+<body class="overflow-hidden h-screen flex-col flex justify-center bg-[url('/images/fundoCadastro.png')]">
+    <header>
+        <nav class="absolute flex items-center justify-between h-20 w-full p-5 bg-greenlight shadow-sm">
+            <div>
+                <a href="/"><img class="w-48 mx-24" src="/images/Logo.png" /></a>
+            </div>
+            <ul class="flex justify-between items-center space-x-5 mr-24">
+                <li class="text-black font-bold text-lg">
+                    <a href="/">Início</a>
+                </li>
+                <li class="text-black font-bold text-lg">
+                    <a href="/#beneficios">Benefícios</a>
+                </li>
+                <li class="text-black font-bold text-lg">
+                    <a href="/#historia">História</a>
+                </li>
+                <li class="text-black font-bold text-lg">
+                    <a href="/#depoimentos">Depoimentos</a>
+                </li>
+                <li class="text-black font-bold text-lg">
+                    <a href="/#contato">Contato</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main class=" mx-auto my-auto ">
+        <div class="flex justify-center">
+            <img class="w-60" src="/images/logocadastro.png" alt="Logo cadastro">
+        </div>
+        <p class="space-y-2 font-bold">Novo cadastro de Admin</p>
+        <form th:action="@{/admin/cadastro-admin}" th:object="${usuario}" method="post" enctype="multipart/form-data"
+            class="grid grid-cols-2">
+            <div class="space-y-2">
+                <label for="nome" class="input input-bordered flex items-center gap-2 custom-label">
+                    <input type="text" class="grow " autocomplete="off" th:field="*{nome}" id="nome" placeholder="Nome">
+                </label>
+                <label for="username" class="input input-bordered flex items-center-2 custom-label">
+                    <input type="text" class="grow " autocomplete="off" th:field="*{username}" id="username"
+                        placeholder="Username">
+                </label>
+                <label for="senha" class="input input-bordered flex items-center gap-2 custom-label">
+                    <input type="password" class="grow form-control" autocomplete="off" th:field="*{senha}" id="senha"
+                        placeholder="Senha">
+                </label>
+                <label for="genero" class="flex items-center gap-2 custom-label">
+                    <select name="" id="" th:field="*{genero}" class="select select-bordered w-full  custom-select">
+                        <option value="" selected>Gênero</option>
+                        <option th:each="genero : ${generos}" th:value="${genero}" th:text="${genero}"></option>
+                    </select>
+                </label>
+                <label for="telefone" class="input mr-auto  input-bordered flex items-center gap-2 custom-label">
+                    <input type="tel" class="grow" autocomplete="off" th:field="*{telefone}" id="telefone"
+                        placeholder="Telefone" maxlength="11">
+                </label>
+                <div class="flex justify-center space-x-4 mt-8">
+                    <button class=" bg-greenlight px-6 py-2 rounded-md text-black font-bold "
+                        type="submit">Entrar</button>
+                </div>
+            </div>
+            <div class="space-y-2 space-x-2">
+                <label for="cpf" class="mx-2 mr-auto input input-bordered flex items-center gap-2 custom-label">
+                    <input type="text" class="grow" autocomplete="off" th:field="*{cpf}" id="cpf" placeholder="Cpf"
+                        oninput="formatCPF(this)" maxlength="11">
+                </label>
+                <label for="dataNascimento" class="input input-bordered flex items-center gap-2 custom-label ">
+                    <input type="date" class="grow" autocomplete="off" th:field="*{dataNascimento}" id="dataNascimento">
+                </label>
+                <label for="email" class="input input-bordered flex items-center gap-2 custom-label">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 ">
+                        <path
+                            d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
+                        <path
+                            d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
+                    </svg>
+                    <input placeholder="Email" type="text" class="grow" autocomplete="off" th:field="*{email}"
+                        id="email">
+                </label>
+                <label for="imagem" class=" w-60  flex items-center custom-label ">
+                    <input name="file" id="imagem" type="file" class="justify-center  w-full custom-file-input"
+                        autocomplete="off">
+                </label>
+                <div class="flex justify-center mr-auto">
+                    <a href="/cuidaidososb/src/main/resources/templates/home/index.html">
+                        <button class="bg-redlight px-6 py-2 rounded-md text-black font-bold"
+                            type="button">Voltar</button>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </main>
+    <footer class=" bg-greenlight shadow-sm">
+        <div class="flex flex-col items-center justify-center h-20 text-black">
+            <p>Cuidaidoso© todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
