@@ -14,7 +14,7 @@
                     .then(data => {
                         if (!data.erro) {
                             document.getElementById('uf').value = data.uf;
-                            document.getElementById('estado').value = data.estado;
+                            document.getElementById('estado').value = data.uf; // Ajuste aqui
                             document.getElementById('localidade').value = data.localidade;
                             document.getElementById('bairro').value = data.bairro;
                         } else {
@@ -25,6 +25,8 @@
                         console.error('Erro ao buscar o CEP:', error);
                         alert('Erro ao buscar o CEP!');
                     });
+            } else {
+                alert('CEP inválido!');
             }
         }
     </script>
@@ -32,7 +34,8 @@
 
 <body>
     <h1>Cadastro de Endereço</h1>
-    <form th:action="@{/endereco/cadastro-endereco}" method="post">
+    <form th:action="@{/cuidador/cadastro-endereco}" method="post">
+        <input type="hidden" th:value="${cuidadorId}" name="cuidadorId">
         <label for="cep">CEP:</label>
         <input type="text" id="cep" name="cep" maxlength="8" onblur="buscarCEP()" required><br>
 
@@ -42,12 +45,11 @@
         <label for="estado">Estado:</label>
         <input type="text" id="estado" name="estado" required><br>
 
-        <label for="localidade">Cidade:</label>
+        <label for="localidade">Localidade:</label>
         <input type="text" id="localidade" name="localidade" required><br>
 
         <label for="bairro">Bairro:</label>
         <input type="text" id="bairro" name="bairro" required><br>
-
 
         <button type="submit">Cadastrar</button>
     </form>

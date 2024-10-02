@@ -2,20 +2,23 @@ package com.br.cuidaidoso.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.br.cuidaidoso.enums.Genero;
 import com.br.cuidaidoso.enums.Perfil;
 import com.br.cuidaidoso.model.Cuidador;
+import com.br.cuidaidoso.model.Endereco;
+import com.br.cuidaidoso.model.dto.EnderecoRequest;
 import com.br.cuidaidoso.repository.CuidadorRepository;
+import com.br.cuidaidoso.service.EnderecoService;
 import com.br.cuidaidoso.util.UploadUtil;
-
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/cuidador")
@@ -23,6 +26,9 @@ public class CuidadorController {
 
     @Autowired
     private CuidadorRepository cuidadorRepository;
+
+    @Autowired
+    private EnderecoService enderecoService;
 
     @GetMapping("/cadastro")
     public ModelAndView cadastro(Cuidador cuidador) {
@@ -47,12 +53,39 @@ public class CuidadorController {
                 cuidador.setImagem("static/images/imagem-uploads/images.png");
             }
             cuidador.setPerfil(Perfil.CUIDADOR);
-            cuidadorRepository.save(cuidador);
-            System.out.println("Cuidador salvo com sucesso" + cuidador.getNome() + "" + cuidador.getImagem());
-            return home();
+            Cuidador cuidadorSalvo = cuidadorRepository.save(cuidador);
+            System.out.println("Cuidador salvo com sucesso: " + cuidador.getNome() + " " + cuidador.getImagem());
+
+            // Redirecionar para a página de cadastro de endereço
+            ModelAndView mvEndereco = new ModelAndView("cuidador/endereco/cadastro");
+            mvEndereco.addObject("cuidadorId", cuidadorSalvo.getId());
+            mvEndereco.addObject("endereco", new EnderecoRequest());
+            return mvEndereco;
         } catch (Exception e) {
-            mv.addObject("msgERRo", e.getMessage());
-            System.out.println("Erro ao salvar o cuidador" + e.getMessage());
+            mv.addObject("msgErro", e.getMessage());
+            System.out.println("Erro ao salvar o cuidador: " + e.getMessage());
+            return mv;
+        }
+    }
+
+    @PostMapping("/cadastro-endereco")
+    public ModelAndView cadastrarEndereco(@ModelAttribute EnderecoRequest enderecoRequest,
+            @RequestParam("cuidadorId") Long cuidadorId, Model model) {
+        ModelAndView mv = new ModelAndView("cuidador/endereco/cadastro");
+        mv.addObject("endereco", enderecoRequest);
+
+        try {
+            Endereco endereco = enderecoService.executa(enderecoRequest);
+            Cuidador cuidador = cuidadorRepository.findById(cuidadorId)
+                    .orElseThrow(() -> new IllegalArgumentException("Cuidador não encontrado"));
+            cuidador.setEndereco(endereco);
+            cuidadorRepository.save(cuidador);
+            model.addAttribute("endereco", endereco);
+            System.out.println("Endereço salvo com sucesso: " + enderecoRequest.getCep());
+            return new ModelAndView("redirect:/cuidador/inicio");
+        } catch (Exception e) {
+            mv.addObject("msgErro", e.getMessage());
+            System.out.println("Erro ao salvar o endereço: " + e.getMessage());
             return mv;
         }
     }
@@ -62,5 +95,4 @@ public class CuidadorController {
         ModelAndView mv = new ModelAndView("home/index");
         return mv;
     }
-
 }

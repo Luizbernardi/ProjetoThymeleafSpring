@@ -21,20 +21,28 @@ public class EnderecoService {
     private final EnderecoFeign enderecoFeign;
     private final EnderecoRepository enderecoRepository;
 
-    public EnderecoResponse executa(EnderecoRequest request) {
+    public Endereco executa(EnderecoRequest request) {
         logger.info("Recebido EnderecoRequest: {}", request);
 
         if (!isCepValido(request.getCep())) {
             throw new IllegalArgumentException("CEP inválido: " + request.getCep());
         }
 
+        // Verificar se o endereço já existe no banco de dados
+        Endereco enderecoExistente = enderecoRepository.findByCep(request.getCep());
+        if (enderecoExistente != null) {
+            logger.info("Endereço já existente no banco de dados: {}", enderecoExistente);
+            return enderecoExistente;
+        }
+
+        // Buscar o endereço via API externa
         EnderecoResponse response = enderecoFeign.buscarEnderecoCep(request.getCep());
         logger.info("Resposta do ViaCEP: {}", response);
 
         Endereco endereco = converteParaEndereco(response);
         enderecoRepository.save(endereco);
         logger.info("Endereço salvo com sucesso: {}", endereco);
-        return response;
+        return endereco;
     }
 
     private boolean isCepValido(String cep) {
@@ -43,7 +51,7 @@ public class EnderecoService {
 
     private Endereco converteParaEndereco(EnderecoResponse response) {
         Endereco endereco = new Endereco();
-        endereco.setCep(response.getCep());
+        endereco.setCep(response.getCep().replaceAll("-", "")); // Remover o hífen do CEP
         endereco.setUf(response.getUf());
         endereco.setEstado(response.getEstado());
         endereco.setLocalidade(response.getLocalidade());
