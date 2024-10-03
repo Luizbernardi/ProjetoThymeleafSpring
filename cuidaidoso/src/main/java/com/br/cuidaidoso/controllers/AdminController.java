@@ -16,6 +16,7 @@ import com.br.cuidaidoso.model.Admin;
 import com.br.cuidaidoso.model.Endereco;
 import com.br.cuidaidoso.model.dto.EnderecoRequest;
 import com.br.cuidaidoso.repository.AdminRepository;
+import com.br.cuidaidoso.repository.ClienteRepository;
 import com.br.cuidaidoso.repository.CuidadorRepository;
 import com.br.cuidaidoso.service.EnderecoService;
 import com.br.cuidaidoso.util.UploadUtil;
@@ -33,6 +34,9 @@ public class AdminController {
 
     @Autowired
     private CuidadorRepository cuidadorRepository;
+
+    @Autowired
+    private ClienteRepository clienteRepository;
 
     @GetMapping("/cadastro")
     public ModelAndView cadastro(Admin admin) {
@@ -105,6 +109,13 @@ public class AdminController {
     public ModelAndView listCuidadores() {
         ModelAndView mv = new ModelAndView("admin/list-cuidadores");
         mv.addObject("cuidadores", cuidadorRepository.findAll());
+        return mv;
+    }
+
+    @GetMapping("/list-clientes")
+    public ModelAndView listClientes() {
+        ModelAndView mv = new ModelAndView("admin/list-clientes");
+        mv.addObject("clientes", clienteRepository.findAll());
         return mv;
     }
 

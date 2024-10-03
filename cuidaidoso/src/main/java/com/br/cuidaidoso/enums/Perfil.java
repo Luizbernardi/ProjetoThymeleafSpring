@@ -3,7 +3,7 @@ package com.br.cuidaidoso.enums;
 public enum Perfil {
 
     ADMIN("Administrador"),
-    CUIDADOR("Cuidador");
+    CUIDADOR("Cuidador"), CLIENTE("Cliente");
 
     private String perfil;
 

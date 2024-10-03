@@ -12,7 +12,7 @@
         rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
-    <title>Lista de Administradores</title>
+    <title>Lista de Clientes</title>
     <script>
         tailwind.config = {
             theme: {
@@ -33,7 +33,7 @@
 
 <body>
     <header>
-        <nav class="absolute flex items-center justify-between w-full p-5 bg-greenlight shadow-sm ">
+        <nav class="absolute flex items-center justify-between h-20 w-full p-5 bg-greenlight shadow-sm">
             <div>
                 <a th:href="@{/home}"><img class="w-48 mx-24" src="/images/Logo.png" /></a>
             </div>
@@ -45,13 +45,13 @@
                     <a th:href="@{/login/login}">Entrar</a>
                 </li>
                 <li class="text-black font-bold text-lg">
-                    <a th:href="@{/cuidador/cadastro}">Cadastre-se</a>
+                    <a th:href="@{/cliente/cadastro}">Cadastre-se</a>
                 </li>
             </ul>
         </nav>
     </header>
     <main class="container mx-auto space-y-12">
-        <h1 class="text-2xl font-bold mb-5">Lista de Administradores</h1>
+        <h1 class="text-2xl font-bold mb-5">Lista de Clientes</h1>
         <table class="min-w-full bg-white">
             <thead>
                 <tr>
@@ -68,17 +68,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="admin : ${admins}">
-                    <td class="border px-4 py-2" th:text="${admin.id}"></td>
-                    <td class="border px-4 py-2" th:text="${admin.nome}"></td>
-                    <td class="border px-4 py-2" th:text="${admin.email}"></td>
-                    <td class="border px-4 py-2" th:text="${admin.username}"></td>
-                    <td class="border px-4 py-2" th:text="${admin.cpf}"></td>
-                    <td class="border px-4 py-2" th:text="${admin.telefone}"></td>
-                    <td class="border px-4 py-2" th:text="${admin.dataNascimento}"></td>
-                    <td class="border px-4 py-2" th:text="${admin.idade}"></td>
-                    <td class="border px-4 py-2" th:text="${admin.genero}"></td>
-                    <td class="border px-4 py-2" th:text="${admin.perfil}"></td>
+                <tr th:each="cliente : ${clientes}">
+                    <td class="border px-4 py-2" th:text="${cliente.id}"></td>
+                    <td class="border px-4 py-2" th:text="${cliente.nome}"></td>
+                    <td class="border px-4 py-2" th:text="${cliente.email}"></td>
+                    <td class="border px-4 py-2" th:text="${cliente.username}"></td>
+                    <td class="border px-4 py-2" th:text="${cliente.cpf}"></td>
+                    <td class="border px-4 py-2" th:text="${cliente.telefone}"></td>
+                    <td class="border px-4 py-2" th:text="${cliente.dataNascimento}"></td>
+                    <td class="border px-4 py-2" th:text="${cliente.idade}"></td>
+                    <td class="border px-4 py-2" th:text="${cliente.genero}"></td>
+                    <td class="border px-4 py-2" th:text="${cliente.perfil}"></td>
                 </tr>
             </tbody>
         </table>
