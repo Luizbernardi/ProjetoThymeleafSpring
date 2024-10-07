@@ -16,6 +16,7 @@ import com.br.cuidaidoso.enums.Perfil;
 import com.br.cuidaidoso.model.Cuidador;
 import com.br.cuidaidoso.model.Endereco;
 import com.br.cuidaidoso.model.dto.EnderecoRequest;
+import com.br.cuidaidoso.repository.ClienteRepository;
 import com.br.cuidaidoso.repository.CuidadorRepository;
 import com.br.cuidaidoso.service.EnderecoService;
 import com.br.cuidaidoso.util.UploadUtil;
@@ -29,6 +30,9 @@ public class CuidadorController {
 
     @Autowired
     private EnderecoService enderecoService;
+
+    @Autowired
+    private ClienteRepository clienteRepository;
 
     @GetMapping("/cadastro")
     public ModelAndView cadastro(Cuidador cuidador) {
@@ -94,6 +98,13 @@ public class CuidadorController {
     public ModelAndView listCuidadores() {
         ModelAndView mv = new ModelAndView("cuidador/list-cuidadores");
         mv.addObject("cuidadores", cuidadorRepository.findAll());
+        return mv;
+    }
+
+    @GetMapping("/list-clientes")
+    public ModelAndView listClientes() {
+        ModelAndView mv = new ModelAndView("cuidador/list-clientes");
+        mv.addObject("clientes", clienteRepository.findAll());
         return mv;
     }
 
