@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -73,6 +74,19 @@ public class ClienteController {
         ModelAndView mv = new ModelAndView("cliente/list-cuidadores");
         mv.addObject("cuidadores", cuidadorRepository.findAll());
         return mv;
+    }
+
+    @GetMapping("/list-clientes")
+    public ModelAndView listClientes() {
+        ModelAndView mv = new ModelAndView("cuidador/list-clientes");
+        mv.addObject("clientes", clienteRepository.findAll());
+        return mv;
+    }
+
+    @GetMapping("/excluir/{id}")
+    public String excluirCliente(@PathVariable("id") Long id) {
+        clienteRepository.deleteById(id);
+        return "/home/index";
     }
 
 }

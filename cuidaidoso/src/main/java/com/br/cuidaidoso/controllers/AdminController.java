@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -123,5 +124,23 @@ public class AdminController {
     public ModelAndView home() {
         ModelAndView mv = new ModelAndView("home/index");
         return mv;
+    }
+
+    @GetMapping("/excluir-cliente/{id}")
+    public String excluirCliente(@PathVariable("id") Long id) {
+        clienteRepository.deleteById(id);
+        return "/home/index";
+    }
+
+    @GetMapping("/excluir-cuidador/{id}")
+    public String excluirCuidador(@PathVariable("id") Long id) {
+        cuidadorRepository.deleteById(id);
+        return "/home/index";
+    }
+
+    @GetMapping("/excluir-admin/{id}")
+    public String excluirAdmin(@PathVariable("id") Long id) {
+        adminRepository.deleteById(id);
+        return "/home/index";
     }
 }

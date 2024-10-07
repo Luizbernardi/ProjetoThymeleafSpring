@@ -12,7 +12,7 @@
         rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
-    <title>Lista de Cuidadores</title>
+    <title>Lista de Clientes</title>
     <script>
         tailwind.config = {
             theme: {
@@ -45,30 +45,28 @@
                     <a th:href="@{/login/login}">Entrar</a>
                 </li>
                 <li class="text-black font-bold text-lg">
-                    <a th:href="@{/cliente/cadastro}">Cadastre-se</a>
+                    <a th:href="@{/cuidador/cadastro}">Cadastre-se</a>
                 </li>
             </ul>
         </nav>
     </header>
     <main class="container mx-auto space-y-12">
-        <h1 class="text-2xl font-bold mb-5">Lista de Cuidadores</h1>
+        <h1 class="text-2xl font-bold mb-5">Lista de Clientes</h1>
         <table class="min-w-full bg-white">
             <thead>
                 <tr>
                     <th class="py-2">Nome</th>
-                    <th class="py-2">Formação</th>
                     <th class="py-2">Telefone</th>
                     <th class="py-2">Idade</th>
                     <th class="py-2">Gênero</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="cuidador : ${cuidadores}">
-                    <td class="border px-4 py-2" th:text="${cuidador.nome}"></td>
-                    <td class="border px-4 py-2" th:text="${cuidador.formacao}"></td>
-                    <td class="border px-4 py-2" th:text="${cuidador.telefone}"></td>
-                    <td class="border px-4 py-2" th:text="${cuidador.idade}"></td>
-                    <td class="border px-4 py-2" th:text="${cuidador.genero}"></td>
+                <tr th:each="cliente : ${clientes}">
+                    <td class="border px-4 py-2" th:text="${cliente.nome}"></td>
+                    <td class="border px-4 py-2" th:text="${cliente.telefone}"></td>
+                    <td class="border px-4 py-2" th:text="${cliente.idade}"></td>
+                    <td class="border px-4 py-2" th:text="${cliente.genero}"></td>
                 </tr>
             </tbody>
         </table>
