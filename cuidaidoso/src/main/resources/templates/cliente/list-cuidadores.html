@@ -3,25 +3,10 @@
 
 <head th:replace="~{fragments/head :: headImports}"></head>
 
-<body>
-    <header>
-        <nav class="absolute flex items-center justify-between h-20 w-full p-5 bg-greenlight shadow-sm">
-            <div>
-                <a th:href="@{/home}"><img class="w-48 mx-24" src="/images/Logo.png" /></a>
-            </div>
-            <ul class="flex justify-between items-center space-x-5 mr-24">
-                <li class="text-black font-bold text-lg">
-                    <a th:href="@{/home}">Início</a>
-                </li>
-                <li class="text-black font-bold text-lg">
-                    <a th:href="@{/login/login}">Entrar</a>
-                </li>
-                <li class="text-black font-bold text-lg">
-                    <a th:href="@{/cliente/cadastro}">Cadastre-se</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
+<body class="flex h-screen">
+
+    <head th:replace="~{fragments/header :: headerImports}"></head>
+    <nav th:replace="~{fragments/navbar :: navImports}"></nav>
     <main class="container mx-auto space-y-12">
         <h1 class="text-2xl font-bold mb-5">Lista de Cuidadores</h1>
         <table class="min-w-full bg-white">
