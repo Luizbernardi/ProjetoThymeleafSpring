@@ -126,21 +126,28 @@ public class AdminController {
         return mv;
     }
 
-    @GetMapping("/excluir-cliente/{id}")
-    public String excluirCliente(@PathVariable("id") Long id) {
-        clienteRepository.deleteById(id);
-        return "/home/index";
-    }
-
-    @GetMapping("/excluir-cuidador/{id}")
-    public String excluirCuidador(@PathVariable("id") Long id) {
-        cuidadorRepository.deleteById(id);
-        return "/home/index";
-    }
-
-    @GetMapping("/excluir-admin/{id}")
+    @GetMapping("/excluir/{id}")
     public String excluirAdmin(@PathVariable("id") Long id) {
         adminRepository.deleteById(id);
         return "/home/index";
     }
+
+    @GetMapping("/editar/{id}")
+    public ModelAndView editar(@PathVariable("id") Long id) {
+        ModelAndView mv = new ModelAndView("admin/editar");
+        Perfil[] perfilAdmin = { Perfil.ADMIN };
+        mv.addObject("perfils", perfilAdmin);
+        Genero[] genero = { Genero.MASCULINO, Genero.FEMININO, Genero.OUTRO };
+        mv.addObject("generos", genero);
+        mv.addObject("usuario", adminRepository.findById(id));
+        return mv;
+    }
+
+    @PostMapping("/editar-admin")
+    public ModelAndView editar(Admin admin) {
+        ModelAndView mv = new ModelAndView("admin/editar");
+        adminRepository.save(admin);
+        return adminList();
+    }
+
 }

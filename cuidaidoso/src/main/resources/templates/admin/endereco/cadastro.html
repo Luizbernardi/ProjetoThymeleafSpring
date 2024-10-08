@@ -3,10 +3,10 @@
 
 <head th:replace="~{fragments/head :: headImports}"></head>
 
-<body>
+<body class="flex flex-col min-h-screen">
 
-    <header th:replace="~{fragments/header :: headerImports}"></header>
-    <main class="container mx-auto pt-10 ">
+    <header class="flex-shrink-0" th:replace="~{fragments/header :: headerImports}"></header>
+    <main class="container flex-grow my-auto mx-auto pt-10">
         <h1>Cadastro de Endereço</h1>
         <form th:action="@{/admin/cadastro-endereco}" method="post">
             <input type="hidden" th:value="${adminId}" name="adminId">
@@ -28,6 +28,7 @@
             <button type="submit">Cadastrar</button>
         </form>
     </main>
+    <footer class="flex-shrink-0" th:replace="~{fragments/footer :: footerImports}"></footer>
 </body>
 
 </html>

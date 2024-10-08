@@ -120,4 +120,5 @@ public class CuidadorController {
         cuidadorRepository.deleteById(id);
         return "/home/index";
     }
+
 }
