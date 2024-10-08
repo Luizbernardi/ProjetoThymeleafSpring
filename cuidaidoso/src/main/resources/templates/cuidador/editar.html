@@ -3,7 +3,6 @@
 
 <head th:replace="~{fragments/head :: headImports}"></head>
 
-
 <body class="overflow-hidden h-screen flex-col flex justify-center bg-[url('/images/fundoCadastro.png')]">
 
     <header th:replace="~{fragments/header :: headerImports}"></header>
@@ -11,16 +10,15 @@
         <div class="flex justify-center">
             <img class="w-44" src="/images/logocadastro.png" alt="Logo cadastro">
         </div>
-        <p class="space-y-2 font-bold">Editar Admin</p>
-        <form th:action="@{/admin/editar-admin}" th:object="${usuario}" method="post" enctype="multipart/form-data"
-            class="grid grid-cols-2">
-
+        <p class="space-y-2 font-bold">Editar Cuidador</p>
+        <form th:action="@{/cuidador/editar-cuidador}" th:object="${usuario}" method="post"
+            enctype="multipart/form-data" class="grid grid-cols-2">
             <div class="space-y-2">
                 <input type="hidden" th:field="*{id}">
                 <label for="nome" class="input input-bordered flex items-center gap-2 custom-label">
                     <input type="text" class="grow " autocomplete="off" th:field="*{nome}" id="nome" placeholder="Nome">
                 </label>
-                <label for="username" class="input input-bordered flex items-center-2 custom-label">
+                <label for="username" class="input input-bordered flex items-center gap-2 custom-label">
                     <input type="text" class="grow " autocomplete="off" th:field="*{username}" id="username"
                         placeholder="Username">
                 </label>
@@ -31,7 +29,8 @@
                 <label for="genero" class="flex items-center gap-2 custom-label">
                     <select name="" id="" th:field="*{genero}" class="select select-bordered w-full  custom-select">
                         <option value="" selected>Gênero</option>
-                        <option th:each="genero : ${generos}" th:value="${genero}" th:text="${genero}"></option>
+                        <option th:each="genero : ${generos}" th:value="${genero}" th:text="${genero}">
+                        </option>
                     </select>
                 </label>
                 <label for="telefone" class="input mr-auto  input-bordered flex items-center gap-2 custom-label">
@@ -43,13 +42,17 @@
                         type="submit">Entrar</button>
                 </div>
             </div>
-            <div class="space-y-2 space-x-2 mt-2">
+            <div class="space-y-2 space-x-2">
                 <label for="cpf" class="mx-2 mr-auto input input-bordered flex items-center gap-2 custom-label">
                     <input type="text" class="grow" autocomplete="off" th:field="*{cpf}" id="cpf" placeholder="Cpf"
                         oninput="formatCPF(this)" maxlength="11">
                 </label>
                 <label for="dataNascimento" class="input input-bordered flex items-center gap-2 custom-label ">
                     <input type="date" class="grow" autocomplete="off" th:field="*{dataNascimento}" id="dataNascimento">
+                </label>
+                <label for="formacao" class="mx-2 mr-auto  input input-bordered flex items-center gap-2 custom-label">
+                    <input placeholder="Formação" type="text" class="grow" autocomplete="off" th:field="*{formacao}"
+                        id="formacao">
                 </label>
                 <label for="email" class="input input-bordered flex items-center gap-2 custom-label">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 ">
@@ -68,8 +71,7 @@
                 <div class="flex justify-center mr-auto">
                     <a href="/cuidaidososb/src/main/resources/templates/home/index.html">
                         <button class="bg-redlight px-6 py-2 rounded-md text-black font-bold"
-                            type="button">Voltar</button>
-                    </a>
+                            type="button">Voltar</button></a>
                 </div>
             </div>
         </form>

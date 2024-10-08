@@ -121,4 +121,22 @@ public class CuidadorController {
         return "/home/index";
     }
 
+    @GetMapping("/editar/{id}")
+    public ModelAndView editarCuidador(@PathVariable("id") Long id) {
+        ModelAndView mv = new ModelAndView("cuidador/editar");
+        Perfil[] perfilCuidador = { Perfil.CUIDADOR };
+        mv.addObject("perfils", perfilCuidador);
+        Genero[] genero = { Genero.MASCULINO, Genero.FEMININO, Genero.OUTRO };
+        mv.addObject("generos", genero);
+        mv.addObject("usuario", cuidadorRepository.findById(id).orElse(null));
+        return mv;
+    }
+
+    @PostMapping("/editar-cuidador")
+    public ModelAndView editarCuidador(@ModelAttribute Cuidador cuidador) {
+        cuidador.setPerfil(Perfil.CUIDADOR); // Garantir que o perfil seja CUIDADOR
+        cuidadorRepository.save(cuidador);
+        return listCuidadores();
+    }
+
 }

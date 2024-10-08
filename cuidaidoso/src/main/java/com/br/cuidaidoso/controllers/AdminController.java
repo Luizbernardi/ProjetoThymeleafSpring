@@ -144,8 +144,8 @@ public class AdminController {
     }
 
     @PostMapping("/editar-admin")
-    public ModelAndView editar(Admin admin) {
-        ModelAndView mv = new ModelAndView("admin/editar");
+    public ModelAndView editar(@ModelAttribute Admin admin) {
+        admin.setPerfil(Perfil.ADMIN);
         adminRepository.save(admin);
         return adminList();
     }

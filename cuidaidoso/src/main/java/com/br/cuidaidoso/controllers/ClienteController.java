@@ -89,4 +89,22 @@ public class ClienteController {
         return "/home/index";
     }
 
+    @GetMapping("/editar/{id}")
+    public ModelAndView editarCliente(@PathVariable("id") Long id) {
+        ModelAndView mv = new ModelAndView("cliente/editar");
+        Perfil[] perfilCliente = { Perfil.CLIENTE };
+        mv.addObject("perfils", perfilCliente);
+        Genero[] genero = { Genero.MASCULINO, Genero.FEMININO, Genero.OUTRO };
+        mv.addObject("generos", genero);
+        mv.addObject("usuario", clienteRepository.findById(id).orElse(null));
+        return mv;
+    }
+
+    @PostMapping("/editar-cliente")
+    public ModelAndView editarCliente(@ModelAttribute Cliente cliente) {
+        cliente.setPerfil(Perfil.CLIENTE);
+        clienteRepository.save(cliente);
+        return listClientes();
+    }
+
 }
