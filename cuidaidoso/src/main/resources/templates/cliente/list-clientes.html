@@ -3,31 +3,36 @@
 
 <head th:replace="~{fragments/head :: headImports}"></head>
 
-<body class="flex h-screen">
+<body class="overflow-hidden h-screen flex flex-col">
 
-    <head th:replace="~{fragments/header :: headerImports}"></head>
-    <nav th:replace="~{fragments/navbar :: navImports}"></nav>
-    <main class="container mx-auto space-y-12">
-        <h1 class="text-2xl font-bold mb-5">Lista de Clientes</h1>
-        <table class="min-w-full bg-white">
-            <thead>
-                <tr>
-                    <th class="py-2">Nome</th>
-                    <th class="py-2">Telefone</th>
-                    <th class="py-2">Idade</th>
-                    <th class="py-2">Gênero</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="cliente : ${clientes}">
-                    <td class="border px-4 py-2" th:text="${cliente.nome}"></td>
-                    <td class="border px-4 py-2" th:text="${cliente.telefone}"></td>
-                    <td class="border px-4 py-2" th:text="${cliente.idade}"></td>
-                    <td class="border px-4 py-2" th:text="${cliente.genero}"></td>
-                </tr>
-            </tbody>
-        </table>
-    </main>
+    <header th:replace="~{fragments/header :: headerImports}"></header>
+    <div class="flex flex-grow overflow-hidden">
+        <nav th:replace="~{fragments/navbar :: navImports}"></nav>
+        <main class="container mx-auto space-y-12 flex-grow">
+            <h1 class="text-2xl font-bold mb-5">Lista de Clientes</h1>
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr>
+                        <th class="py-2">Nome</th>
+                        <th class="py-2">Telefone</th>
+                        <th class="py-2">Idade</th>
+                        <th class="py-2">Gênero</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cliente : ${clientes}">
+                        <td class="border px-4 py-2" th:text="${cliente.nome}"></td>
+                        <td class="border px-4 py-2" th:text="${cliente.telefone}"></td>
+                        <td class="border px-4 py-2" th:text="${cliente.idade}"></td>
+                        <td class="border px-4 py-2" th:text="${cliente.genero}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </div>
+    <footer th:replace="~{fragments/footer :: footerImports}">
+    </footer>
+
 </body>
 
 </html>

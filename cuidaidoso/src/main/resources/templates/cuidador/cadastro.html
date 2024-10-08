@@ -5,10 +5,10 @@
 
 <body class="overflow-hidden h-screen flex-col flex justify-center bg-[url('/images/fundoCadastro.png')]">
 
-    <head th:replace="~{fragments/header :: headerImports}"></head>
+    <header th:replace="~{fragments/header :: headerImports}"></header>
     <main class=" mx-auto my-auto ">
         <div class="flex justify-center">
-            <img class="w-60" src="/images/logocadastro.png" alt="Logo cadastro">
+            <img class="w-44" src="/images/logocadastro.png" alt="Logo cadastro">
         </div>
         <p class="space-y-2 font-bold">Novo cadastro</p>
         <form th:action="@{/cuidador/cadastro-cuidador}" th:object="${usuario}" method="post"
@@ -75,10 +75,7 @@
             </div>
         </form>
     </main>
-    <footer class=" bg-greenlight shadow-sm">
-        <div class="flex flex-col items-center justify-center h-20 text-black">
-            <p>Cuidaidoso© todos os direitos reservados.</p>
-        </div>
+    <footer th:replace="~{fragments/footer :: footerImports}">
     </footer>
 </body>
 

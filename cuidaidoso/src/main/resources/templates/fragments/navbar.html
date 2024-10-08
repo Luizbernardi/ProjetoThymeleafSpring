@@ -1,7 +1,5 @@
-<nav th:fragment="navImports" class="lg:w-[20%] p-10 flex justify-between h-full items-center lg:flex-col bg-white">
-    <img class="align-middle w-56" src="/ProjetoCuidaidoso/cuidaidososb/src/main/resources/static/img/logo2.png"
-        alt="Logo2 Cuidaidoso">
-    <div class="space-y-5 align-middle flex flex-col flex-wrap mt-32 h-full">
+<nav th:fragment="navImports" class="lg:w-[16%] p-10 flex flex-col justify-between h-full bg-white">
+    <div class="space-y-5 align-middle flex flex-col flex-wrap mt-32 flex-grow">
         <div class="flex items-center">
             <button class="btn btn-ghost flex justify-center w-full">
                 <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
@@ -22,9 +20,11 @@
                 </svg>Cuidadores
             </button>
             <div id="dropdownMenuCuidadores"
-                class="hidden absolute mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
+                class="hidden absolute mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
                 <a th:href="@{/cuidador/list-cuidadores}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Listar
                     Cuidadores</a>
+                <a th:href="@{/cuidador/list-clientes}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Listar
+                    Clientes</a>
                 <a th:href="@{/cuidador/cadastro}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Cadastrar
                     Cuidador</a>
             </div>
@@ -37,9 +37,11 @@
                 </svg>Clientes
             </button>
             <div id="dropdownMenuClientes"
-                class="hidden absolute mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
+                class="hidden absolute mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
                 <a th:href="@{/cliente/list-clientes}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Listar
                     Clientes</a>
+                <a th:href="@{/cliente/list-cuidadores}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Listar
+                    Cuidadores</a>
                 <a th:href="@{/cliente/cadastro}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Cadastrar
                     Cliente</a>
             </div>
