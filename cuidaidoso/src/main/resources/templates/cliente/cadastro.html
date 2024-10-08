@@ -1,35 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap"
-        rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        redlight: '#E55959',
-                        greenlight: '#7FCDCD',
-                        graylight: '#E7E7E7',
-                        graytext: '#D9D9D9',
-                        redbackground: '#EED0D0',
-                        orangetext: '#C25500'
-                    }
-                }
-            }
-        }
-    </script>
-    <title>Cadastro de Cliente</title>
-</head>
+<head th:replace="~{fragments/head :: headImports}"></head>
 
 <body class="overflow-hidden h-screen flex-col flex justify-center bg-[url('/images/fundoCadastro.png')]">
     <header>
