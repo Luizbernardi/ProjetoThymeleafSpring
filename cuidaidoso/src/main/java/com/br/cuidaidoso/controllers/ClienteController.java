@@ -82,7 +82,7 @@ public class ClienteController {
     @GetMapping("/excluir/{id}")
     public String excluirCliente(@PathVariable("id") Long id) {
         clienteRepository.deleteById(id);
-        return "redirect:/cliente/list-clientes";
+        return "redirect:/admin/list-clientes";
     }
 
     @GetMapping("/editar/{id}")

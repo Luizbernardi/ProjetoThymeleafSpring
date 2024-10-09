@@ -18,7 +18,6 @@
                         <th class="py-2">Telefone</th>
                         <th class="py-2">Idade</th>
                         <th class="py-2">Gênero</th>
-                        <th class="py-2">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,10 +27,6 @@
                         <td class="border px-4 py-2" th:text="${cuidador.telefone}"></td>
                         <td class="border px-4 py-2" th:text="${cuidador.idade}"></td>
                         <td class="border px-4 py-2" th:text="${cuidador.genero}"></td>
-                        <td class="border px-4 py-2">
-                            <a th:href="@{/cuidador/editar/{id}(id=${cuidador.id})}" class="text-orange-500">Editar</a>
-                            <a th:href="@{/cuidador/excluir/{id}(id=${cuidador.id})}" class="text-red-500">Excluir</a>
-                        </td>
                     </tr>
                 </tbody>
             </table>

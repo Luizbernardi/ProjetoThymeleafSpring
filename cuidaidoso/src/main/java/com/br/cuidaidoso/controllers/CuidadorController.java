@@ -113,7 +113,7 @@ public class CuidadorController {
     @GetMapping("/excluir/{id}")
     public String excluirCuidador(@PathVariable("id") Long id) {
         cuidadorRepository.deleteById(id);
-        return "redirect:/cuidador/list-cuidadores";
+        return "redirect:/admin/list-cuidadores";
     }
 
     @GetMapping("/editar/{id}")
