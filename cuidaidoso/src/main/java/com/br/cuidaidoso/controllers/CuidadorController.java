@@ -17,7 +17,6 @@ import com.br.cuidaidoso.enums.Perfil;
 import com.br.cuidaidoso.model.Cuidador;
 import com.br.cuidaidoso.model.Endereco;
 import com.br.cuidaidoso.model.dto.EnderecoRequest;
-import com.br.cuidaidoso.repository.ClienteRepository;
 import com.br.cuidaidoso.repository.CuidadorRepository;
 import com.br.cuidaidoso.service.EnderecoService;
 import com.br.cuidaidoso.util.UploadUtil;
@@ -31,9 +30,6 @@ public class CuidadorController {
 
     @Autowired
     private EnderecoService enderecoService;
-
-    @Autowired
-    private ClienteRepository clienteRepository;
 
     @GetMapping("/cadastro")
     public ModelAndView cadastro(Cuidador cuidador) {
@@ -102,13 +98,6 @@ public class CuidadorController {
         return mv;
     }
 
-    @GetMapping("/list-clientes")
-    public ModelAndView listClientes() {
-        ModelAndView mv = new ModelAndView("cuidador/list-clientes");
-        mv.addObject("clientes", clienteRepository.findAll());
-        return mv;
-    }
-
     @GetMapping("/inicio")
     public ModelAndView home() {
         ModelAndView mv = new ModelAndView("home/index");
@@ -118,7 +107,7 @@ public class CuidadorController {
     @GetMapping("/excluir/{id}")
     public String excluirCuidador(@PathVariable("id") Long id) {
         cuidadorRepository.deleteById(id);
-        return "/home/index";
+        return "redirect:/cuidador/list-cuidadores";
     }
 
     @GetMapping("/editar/{id}")
@@ -133,10 +122,10 @@ public class CuidadorController {
     }
 
     @PostMapping("/editar-cuidador")
-    public ModelAndView editarCuidador(@ModelAttribute Cuidador cuidador) {
+    public String editarCuidador(@ModelAttribute Cuidador cuidador) {
         cuidador.setPerfil(Perfil.CUIDADOR); // Garantir que o perfil seja CUIDADOR
         cuidadorRepository.save(cuidador);
-        return listCuidadores();
+        return "redirect:/cuidador/list-cuidadores";
     }
 
 }

@@ -129,7 +129,7 @@ public class AdminController {
     @GetMapping("/excluir/{id}")
     public String excluirAdmin(@PathVariable("id") Long id) {
         adminRepository.deleteById(id);
-        return "/home/index";
+        return "redirect:/admin/list-admin";
     }
 
     @GetMapping("/editar/{id}")
@@ -144,10 +144,10 @@ public class AdminController {
     }
 
     @PostMapping("/editar-admin")
-    public ModelAndView editar(@ModelAttribute Admin admin) {
+    public String editar(@ModelAttribute Admin admin) {
         admin.setPerfil(Perfil.ADMIN);
         adminRepository.save(admin);
-        return adminList();
+        return "redirect:/admin/list-admin";
     }
 
 }

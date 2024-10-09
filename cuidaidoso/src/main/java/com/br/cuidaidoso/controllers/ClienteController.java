@@ -15,7 +15,6 @@ import com.br.cuidaidoso.enums.Genero;
 import com.br.cuidaidoso.enums.Perfil;
 import com.br.cuidaidoso.model.Cliente;
 import com.br.cuidaidoso.repository.ClienteRepository;
-import com.br.cuidaidoso.repository.CuidadorRepository;
 import com.br.cuidaidoso.util.UploadUtil;
 
 @Controller
@@ -24,9 +23,6 @@ public class ClienteController {
 
     @Autowired
     private ClienteRepository clienteRepository;
-
-    @Autowired
-    private CuidadorRepository cuidadorRepository;
 
     @GetMapping("/inicio")
     public ModelAndView home() {
@@ -69,16 +65,9 @@ public class ClienteController {
         }
     }
 
-    @GetMapping("/list-cuidadores")
-    public ModelAndView listCuidadores() {
-        ModelAndView mv = new ModelAndView("cliente/list-cuidadores");
-        mv.addObject("cuidadores", cuidadorRepository.findAll());
-        return mv;
-    }
-
     @GetMapping("/list-clientes")
     public ModelAndView listClientes() {
-        ModelAndView mv = new ModelAndView("cuidador/list-clientes");
+        ModelAndView mv = new ModelAndView("cliente/list-clientes");
         mv.addObject("clientes", clienteRepository.findAll());
         return mv;
     }
@@ -86,7 +75,7 @@ public class ClienteController {
     @GetMapping("/excluir/{id}")
     public String excluirCliente(@PathVariable("id") Long id) {
         clienteRepository.deleteById(id);
-        return "/home/index";
+        return "redirect:/cliente/list-clientes";
     }
 
     @GetMapping("/editar/{id}")
@@ -101,10 +90,10 @@ public class ClienteController {
     }
 
     @PostMapping("/editar-cliente")
-    public ModelAndView editarCliente(@ModelAttribute Cliente cliente) {
+    public String editarCliente(@ModelAttribute Cliente cliente) {
         cliente.setPerfil(Perfil.CLIENTE);
         clienteRepository.save(cliente);
-        return listClientes();
+        return "redirect:/cliente/list-clientes";
     }
 
 }
