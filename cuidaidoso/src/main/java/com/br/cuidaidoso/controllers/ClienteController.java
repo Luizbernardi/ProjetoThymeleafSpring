@@ -91,6 +91,14 @@ public class ClienteController {
 
     @PostMapping("/editar-cliente")
     public String editarCliente(@ModelAttribute Cliente cliente) {
+        Cliente existingCliente = clienteRepository.findById(cliente.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid cliente Id:" + cliente.getId()));
+
+        // Manter a senha existente se o campo senha estiver vazio
+        if (cliente.getSenha() == null || cliente.getSenha().isEmpty()) {
+            cliente.setSenha(existingCliente.getSenha());
+        }
+
         cliente.setPerfil(Perfil.CLIENTE);
         clienteRepository.save(cliente);
         return "redirect:/cliente/list-clientes";

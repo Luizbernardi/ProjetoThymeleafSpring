@@ -123,9 +123,17 @@ public class CuidadorController {
 
     @PostMapping("/editar-cuidador")
     public String editarCuidador(@ModelAttribute Cuidador cuidador) {
+        Cuidador existingCuidador = cuidadorRepository.findById(cuidador.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid cuidador Id:" + cuidador.getId()));
+
+        // Manter a senha existente se o campo senha estiver vazio
+        if (cuidador.getSenha() == null || cuidador.getSenha().isEmpty()) {
+            cuidador.setSenha(existingCuidador.getSenha());
+        }
+
         cuidador.setPerfil(Perfil.CUIDADOR); // Garantir que o perfil seja CUIDADOR
         cuidadorRepository.save(cuidador);
         return "redirect:/cuidador/list-cuidadores";
-    }
 
+    }
 }

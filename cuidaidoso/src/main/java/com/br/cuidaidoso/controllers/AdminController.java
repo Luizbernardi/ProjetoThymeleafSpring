@@ -145,6 +145,14 @@ public class AdminController {
 
     @PostMapping("/editar-admin")
     public String editar(@ModelAttribute Admin admin) {
+        Admin existingAdmin = adminRepository.findById(admin.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid admin Id:" + admin.getId()));
+
+        // Manter a senha existente se o campo senha estiver vazio
+        if (admin.getSenha() == null || admin.getSenha().isEmpty()) {
+            admin.setSenha(existingAdmin.getSenha());
+        }
+
         admin.setPerfil(Perfil.ADMIN);
         adminRepository.save(admin);
         return "redirect:/admin/list-admin";
