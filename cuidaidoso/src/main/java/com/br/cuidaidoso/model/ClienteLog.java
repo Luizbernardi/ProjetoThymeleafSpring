@@ -18,7 +18,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class AdminLog {
+public class ClienteLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,8 +29,7 @@ public class AdminLog {
     private LocalDateTime horaAcao = LocalDateTime.now();
 
     @ManyToOne
-    @JoinColumn(name = "admin_id")
-    private Admin admin;
-
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
 }

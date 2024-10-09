@@ -15,6 +15,7 @@ import com.br.cuidaidoso.enums.Genero;
 import com.br.cuidaidoso.enums.Perfil;
 import com.br.cuidaidoso.model.Cliente;
 import com.br.cuidaidoso.repository.ClienteRepository;
+import com.br.cuidaidoso.service.ClienteLogService;
 import com.br.cuidaidoso.util.UploadUtil;
 
 @Controller
@@ -23,6 +24,9 @@ public class ClienteController {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private ClienteLogService clienteLogService;
 
     @GetMapping("/inicio")
     public ModelAndView home() {
@@ -55,6 +59,9 @@ public class ClienteController {
             cliente.setPerfil(Perfil.CLIENTE);
             clienteRepository.save(cliente);
             System.out.println("Cliente salvo com sucesso: " + cliente.getNome() + " " + cliente.getImagem());
+
+            // Registrar ação
+            clienteLogService.registrarAcao(cliente, "Cadastro do Cliente");
 
             ModelAndView mvHome = new ModelAndView("redirect:/cliente/inicio");
             return mvHome;
@@ -101,6 +108,7 @@ public class ClienteController {
 
         cliente.setPerfil(Perfil.CLIENTE);
         clienteRepository.save(cliente);
+
         return "redirect:/cliente/list-clientes";
     }
 

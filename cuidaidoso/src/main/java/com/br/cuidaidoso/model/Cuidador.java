@@ -1,7 +1,11 @@
 package com.br.cuidaidoso.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,5 +24,8 @@ public class Cuidador extends User {
 
     @ManyToOne
     private Endereco endereco;
+
+    @OneToMany(mappedBy = "cuidador")
+    private List<CuidadorLog> cuidadorLog = new ArrayList<>();
 
 }

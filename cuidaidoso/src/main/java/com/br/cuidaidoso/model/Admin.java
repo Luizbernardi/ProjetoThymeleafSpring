@@ -18,10 +18,10 @@ import lombok.Setter;
 @Entity
 public class Admin extends User {
 
-    @OneToMany(mappedBy = "admin")
-    private List<AdminLog> adminLog = new ArrayList<>();
-
     @ManyToOne
     private Endereco endereco;
+
+    @OneToMany(mappedBy = "admin")
+    private List<AdminLog> adminLog = new ArrayList<>();
 
 }

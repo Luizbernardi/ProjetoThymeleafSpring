@@ -19,7 +19,9 @@ import com.br.cuidaidoso.model.dto.EnderecoRequest;
 import com.br.cuidaidoso.repository.AdminRepository;
 import com.br.cuidaidoso.repository.ClienteRepository;
 import com.br.cuidaidoso.repository.CuidadorRepository;
+import com.br.cuidaidoso.service.AdminLogService;
 import com.br.cuidaidoso.service.EnderecoService;
+
 import com.br.cuidaidoso.util.UploadUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -38,6 +40,9 @@ public class AdminController {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private AdminLogService adminLogService;
 
     @GetMapping("/cadastro")
     public ModelAndView cadastro(Admin admin) {
@@ -64,6 +69,9 @@ public class AdminController {
             admin.setPerfil(Perfil.ADMIN);
             Admin adminSalvo = adminRepository.save(admin);
             System.out.println("Admin salvo com sucesso: " + admin.getNome() + " " + admin.getImagem());
+
+            // Registrar ação
+            adminLogService.registrarAcao(adminSalvo, "Registro do admin");
 
             // Redirecionar para a página de cadastro de endereço
             ModelAndView mvEndereco = new ModelAndView("admin/endereco/cadastro");
@@ -128,7 +136,12 @@ public class AdminController {
 
     @GetMapping("/excluir/{id}")
     public String excluirAdmin(@PathVariable("id") Long id) {
+        Admin admin = adminRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid admin Id:" + id));
         adminRepository.deleteById(id);
+
+        adminLogService.registrarAcao(admin, "Excluiu um Administrador");
+
         return "redirect:/admin/list-admin";
     }
 
@@ -155,6 +168,10 @@ public class AdminController {
 
         admin.setPerfil(Perfil.ADMIN);
         adminRepository.save(admin);
+
+        // Registrar ação
+        adminLogService.registrarAcao(admin, "Editou um administrador");
+
         return "redirect:/admin/list-admin";
     }
 

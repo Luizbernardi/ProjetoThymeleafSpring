@@ -18,6 +18,7 @@ import com.br.cuidaidoso.model.Cuidador;
 import com.br.cuidaidoso.model.Endereco;
 import com.br.cuidaidoso.model.dto.EnderecoRequest;
 import com.br.cuidaidoso.repository.CuidadorRepository;
+import com.br.cuidaidoso.service.CuidadorLogService;
 import com.br.cuidaidoso.service.EnderecoService;
 import com.br.cuidaidoso.util.UploadUtil;
 
@@ -27,6 +28,9 @@ public class CuidadorController {
 
     @Autowired
     private CuidadorRepository cuidadorRepository;
+
+    @Autowired
+    private CuidadorLogService cuidadorLogService;
 
     @Autowired
     private EnderecoService enderecoService;
@@ -56,6 +60,8 @@ public class CuidadorController {
             cuidador.setPerfil(Perfil.CUIDADOR);
             Cuidador cuidadorSalvo = cuidadorRepository.save(cuidador);
             System.out.println("Cuidador salvo com sucesso: " + cuidador.getNome() + " " + cuidador.getImagem());
+            // Registrar ação
+            cuidadorLogService.registrarAcao(cuidador, "Cadastro Cuidador");
 
             // Redirecionar para a página de cadastro de endereço
             ModelAndView mvEndereco = new ModelAndView("cuidador/endereco/cadastro");
