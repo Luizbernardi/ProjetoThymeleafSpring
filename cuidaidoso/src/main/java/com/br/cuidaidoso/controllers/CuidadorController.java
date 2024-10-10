@@ -139,7 +139,7 @@ public class CuidadorController {
 
         cuidador.setPerfil(Perfil.CUIDADOR); // Garantir que o perfil seja CUIDADOR
         cuidadorRepository.save(cuidador);
-        return "redirect:/cuidador/list-cuidadores";
+        return "redirect:/admin/list-cuidadores";
 
     }
 }
