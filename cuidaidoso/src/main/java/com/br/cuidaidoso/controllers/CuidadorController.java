@@ -128,7 +128,7 @@ public class CuidadorController {
     }
 
     @PostMapping("/editar-cuidador")
-    public String editarCuidador(@ModelAttribute Cuidador cuidador) {
+    public String editarCuidador(@ModelAttribute Cuidador cuidador, @RequestParam("file") MultipartFile imagem) {
         Cuidador existingCuidador = cuidadorRepository.findById(cuidador.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid cuidador Id:" + cuidador.getId()));
 
@@ -137,9 +137,28 @@ public class CuidadorController {
             cuidador.setSenha(existingCuidador.getSenha());
         }
 
+        // Preservar o caminho da imagem se não for alterado
+        if (!imagem.isEmpty()) {
+            if (UploadUtil.fazerUploadImagem(imagem)) {
+                // Remover a imagem antiga se não for a imagem padrão
+                if (!existingCuidador.getImagem().equals("static/images/imagem-uploads/images.png")) {
+                    String caminhoImagemAntiga = "C:\\Users\\Luizb\\OneDrive\\Documentos\\WorkspaceVsCode\\ProjetoThymeleafSpring\\cuidaidoso\\src\\main\\resources\\"
+                            + existingCuidador.getImagem();
+                    UploadUtil.removerImagem(caminhoImagemAntiga);
+                }
+                cuidador.setImagem("static/images/imagem-uploads/" + imagem.getOriginalFilename());
+            } else {
+                cuidador.setImagem(existingCuidador.getImagem());
+            }
+        } else {
+            cuidador.setImagem(existingCuidador.getImagem());
+        }
+
+        // Preservar o endereço existente
+        cuidador.setEndereco(existingCuidador.getEndereco());
+
         cuidador.setPerfil(Perfil.CUIDADOR); // Garantir que o perfil seja CUIDADOR
         cuidadorRepository.save(cuidador);
         return "redirect:/admin/list-cuidadores";
-
     }
 }

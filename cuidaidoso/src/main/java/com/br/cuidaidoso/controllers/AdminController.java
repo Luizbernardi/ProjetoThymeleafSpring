@@ -152,7 +152,7 @@ public class AdminController {
     }
 
     @PostMapping("/editar-admin")
-    public String editar(@ModelAttribute Admin admin) {
+    public String editar(@ModelAttribute Admin admin, @RequestParam("file") MultipartFile imagem) {
         Admin existingAdmin = adminRepository.findById(admin.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid admin Id:" + admin.getId()));
 
@@ -160,6 +160,25 @@ public class AdminController {
         if (admin.getSenha() == null || admin.getSenha().isEmpty()) {
             admin.setSenha(existingAdmin.getSenha());
         }
+
+        // Preservar o caminho da imagem se não for alterado
+        if (!imagem.isEmpty()) {
+            if (UploadUtil.fazerUploadImagem(imagem)) {
+                // Remover a imagem antiga se não for a imagem padrão
+                if (!existingAdmin.getImagem().equals("static/images/imagem-uploads/images.png")) {
+                    String caminhoImagemAntiga = "C:\\Users\\Luizb\\OneDrive\\Documentos\\WorkspaceVsCode\\ProjetoThymeleafSpring\\cuidaidoso\\src\\main\\resources\\"
+                            + existingAdmin.getImagem();
+                    UploadUtil.removerImagem(caminhoImagemAntiga);
+                }
+                admin.setImagem("static/images/imagem-uploads/" + imagem.getOriginalFilename());
+            } else {
+                admin.setImagem(existingAdmin.getImagem());
+            }
+        } else {
+            admin.setImagem(existingAdmin.getImagem());
+        }
+        // Preservar o endereço existente
+        admin.setEndereco(existingAdmin.getEndereco());
 
         admin.setPerfil(Perfil.ADMIN);
         adminRepository.save(admin);

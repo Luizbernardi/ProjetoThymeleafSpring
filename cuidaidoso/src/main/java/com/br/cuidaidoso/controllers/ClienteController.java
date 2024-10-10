@@ -129,7 +129,7 @@ public class ClienteController {
     }
 
     @PostMapping("/editar-cliente")
-    public String editarCliente(@ModelAttribute Cliente cliente) {
+    public String editarCliente(@ModelAttribute Cliente cliente, @RequestParam("file") MultipartFile imagem) {
         Cliente existingCliente = clienteRepository.findById(cliente.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid cliente Id:" + cliente.getId()));
 
@@ -137,6 +137,25 @@ public class ClienteController {
         if (cliente.getSenha() == null || cliente.getSenha().isEmpty()) {
             cliente.setSenha(existingCliente.getSenha());
         }
+
+        // Preservar o caminho da imagem se não for alterado
+        if (!imagem.isEmpty()) {
+            if (UploadUtil.fazerUploadImagem(imagem)) {
+                // Remover a imagem antiga se não for a imagem padrão
+                if (!existingCliente.getImagem().equals("static/images/imagem-uploads/images.png")) {
+                    String caminhoImagemAntiga = "C:\\Users\\Luizb\\OneDrive\\Documentos\\WorkspaceVsCode\\ProjetoThymeleafSpring\\cuidaidoso\\src\\main\\resources\\"
+                            + existingCliente.getImagem();
+                    UploadUtil.removerImagem(caminhoImagemAntiga);
+                }
+                cliente.setImagem("static/images/imagem-uploads/" + imagem.getOriginalFilename());
+            } else {
+                cliente.setImagem(existingCliente.getImagem());
+            }
+        } else {
+            cliente.setImagem(existingCliente.getImagem());
+        }
+        // Preservar o endereço existente
+        cliente.setEndereco(existingCliente.getEndereco());
 
         cliente.setPerfil(Perfil.CLIENTE);
         clienteRepository.save(cliente);
