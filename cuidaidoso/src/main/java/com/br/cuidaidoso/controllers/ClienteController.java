@@ -2,6 +2,7 @@ package com.br.cuidaidoso.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +15,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.br.cuidaidoso.enums.Genero;
 import com.br.cuidaidoso.enums.Perfil;
 import com.br.cuidaidoso.model.Cliente;
+import com.br.cuidaidoso.model.Endereco;
+import com.br.cuidaidoso.model.dto.EnderecoRequest;
 import com.br.cuidaidoso.repository.ClienteRepository;
 import com.br.cuidaidoso.service.ClienteLogService;
+import com.br.cuidaidoso.service.EnderecoService;
 import com.br.cuidaidoso.util.UploadUtil;
 
 @Controller
@@ -27,6 +31,9 @@ public class ClienteController {
 
     @Autowired
     private ClienteLogService clienteLogService;
+
+    @Autowired
+    private EnderecoService enderecoService;
 
     @GetMapping("/inicio")
     public ModelAndView home() {
@@ -57,17 +64,42 @@ public class ClienteController {
                 cliente.setImagem("static/images/imagem-uploads/images.png");
             }
             cliente.setPerfil(Perfil.CLIENTE);
-            clienteRepository.save(cliente);
+            Cliente clienteSalvo = clienteRepository.save(cliente);
             System.out.println("Cliente salvo com sucesso: " + cliente.getNome() + " " + cliente.getImagem());
 
             // Registrar ação
             clienteLogService.registrarAcao(cliente, "Cadastro do Cliente");
 
-            ModelAndView mvHome = new ModelAndView("redirect:/cliente/inicio");
-            return mvHome;
+            // Redirecionar para a página de cadastro de endereço
+            ModelAndView mvEndereco = new ModelAndView("cliente/endereco/cadastro");
+            mvEndereco.addObject("clienteId", clienteSalvo.getId());
+            mvEndereco.addObject("endereco", new EnderecoRequest());
+            return mvEndereco;
         } catch (Exception e) {
             mv.addObject("msgErro", e.getMessage());
             System.out.println("Erro ao salvar o cliente: " + e.getMessage());
+            return mv;
+        }
+    }
+
+    @PostMapping("/cadastro-endereco")
+    public ModelAndView cadastrarEndereco(@ModelAttribute EnderecoRequest enderecoRequest,
+            @RequestParam("clienteId") Long clienteId, Model model) {
+        ModelAndView mv = new ModelAndView("cliente/endereco/cadastro");
+        mv.addObject("endereco", enderecoRequest);
+
+        try {
+            Endereco endereco = enderecoService.executa(enderecoRequest);
+            Cliente cliente = clienteRepository.findById(clienteId)
+                    .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado"));
+            cliente.setEndereco(endereco);
+            clienteRepository.save(cliente);
+            model.addAttribute("endereco", endereco);
+            System.out.println("Endereço salvo com sucesso: " + enderecoRequest.getCep());
+            return new ModelAndView("redirect:/cliente/inicio");
+        } catch (Exception e) {
+            mv.addObject("msgErro", e.getMessage());
+            System.out.println("Erro ao salvar o endereço: " + e.getMessage());
             return mv;
         }
     }

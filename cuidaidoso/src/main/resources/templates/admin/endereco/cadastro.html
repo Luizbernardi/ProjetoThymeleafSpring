@@ -5,7 +5,7 @@
 
 <body class="flex flex-col min-h-screen">
 
-    <header class="flex-shrink-0" th:replace="~{fragments/header :: headerImports}"></header>
+    <header th:replace="~{fragments/header :: headerImports}"></header>
     <main class="mx-auto my-auto">
         <h1>Cadastro de Endereço</h1>
         <form th:action="@{/admin/cadastro-endereco}" method="post">

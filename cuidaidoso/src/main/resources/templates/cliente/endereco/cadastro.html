@@ -8,8 +8,8 @@
     <header th:replace="~{fragments/header :: headerImports}"></header>
     <main class="mx-auto my-auto">
         <h1>Cadastro de Endereço</h1>
-        <form th:action="@{/cuidador/cadastro-endereco}" method="post">
-            <input type="hidden" th:value="${cuidadorId}" name="cuidadorId">
+        <form th:action="@{/cliente/cadastro-endereco}" method="post">
+            <input type="hidden" th:value="${clienteId}" name="clienteId">
             <label for="cep">CEP:</label>
             <input type="text" id="cep" name="cep" maxlength="8" onblur="buscarCEP()" required><br>
 

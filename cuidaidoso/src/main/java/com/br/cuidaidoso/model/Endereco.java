@@ -35,4 +35,7 @@ public class Endereco {
     @OneToMany(mappedBy = "endereco")
     private List<Admin> administradores;
 
+    @OneToMany(mappedBy = "endereco")
+    private List<Cliente> clientes;
+
 }

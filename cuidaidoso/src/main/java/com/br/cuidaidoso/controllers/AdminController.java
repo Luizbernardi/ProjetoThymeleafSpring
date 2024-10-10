@@ -71,7 +71,7 @@ public class AdminController {
             System.out.println("Admin salvo com sucesso: " + admin.getNome() + " " + admin.getImagem());
 
             // Registrar ação
-            adminLogService.registrarAcao(adminSalvo, "Registro do admin");
+            adminLogService.registrarAcao(adminSalvo, "Cadastro admin");
 
             // Redirecionar para a página de cadastro de endereço
             ModelAndView mvEndereco = new ModelAndView("admin/endereco/cadastro");
@@ -136,12 +136,7 @@ public class AdminController {
 
     @GetMapping("/excluir/{id}")
     public String excluirAdmin(@PathVariable("id") Long id) {
-        Admin admin = adminRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid admin Id:" + id));
         adminRepository.deleteById(id);
-
-        adminLogService.registrarAcao(admin, "Excluiu um Administrador");
-
         return "redirect:/admin/list-admin";
     }
 
