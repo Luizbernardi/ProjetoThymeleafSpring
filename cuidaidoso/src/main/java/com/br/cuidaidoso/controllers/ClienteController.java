@@ -109,7 +109,7 @@ public class ClienteController {
         cliente.setPerfil(Perfil.CLIENTE);
         clienteRepository.save(cliente);
 
-        return "redirect:/cliente/list-clientes";
+        return "redirect:/admin/list-clientes";
     }
 
 }

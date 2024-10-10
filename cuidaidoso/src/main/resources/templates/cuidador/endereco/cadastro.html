@@ -5,7 +5,7 @@
 
 <body>
     <header th:replace="~{fragments/header :: headerImports}"></header>
-    <main class="container mx-auto pt-10">
+    <main class="mx-auto my-auto">
         <h1>Cadastro de Endereço</h1>
         <form th:action="@{/cuidador/cadastro-endereco}" method="post">
             <input type="hidden" th:value="${cuidadorId}" name="cuidadorId">
