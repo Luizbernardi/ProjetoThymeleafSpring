@@ -3,6 +3,7 @@ package com.br.cuidaidoso.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.br.cuidaidoso.enums.Genero;
 import com.br.cuidaidoso.enums.Perfil;
 import com.br.cuidaidoso.model.Admin;
+import com.br.cuidaidoso.model.Cliente;
+import com.br.cuidaidoso.model.Cuidador;
 import com.br.cuidaidoso.model.Endereco;
 import com.br.cuidaidoso.model.dto.EnderecoRequest;
 import com.br.cuidaidoso.repository.AdminRepository;
@@ -21,9 +24,7 @@ import com.br.cuidaidoso.repository.ClienteRepository;
 import com.br.cuidaidoso.repository.CuidadorRepository;
 import com.br.cuidaidoso.service.AdminLogService;
 import com.br.cuidaidoso.service.EnderecoService;
-
 import com.br.cuidaidoso.util.UploadUtil;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @RequestMapping("/admin")
@@ -134,15 +135,43 @@ public class AdminController {
         return mv;
     }
 
-    @GetMapping("/excluir/{id}")
+    @GetMapping("/excluir-admin/{id}")
     public String excluirAdmin(@PathVariable("id") Long id) {
+        Admin admin = adminRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid admin Id:" + id));
+        // Registrar ação
+        adminLogService.registrarAcao(admin, "Excluiu um administrador");
         adminRepository.deleteById(id);
+
         return "redirect:/admin/list-admin";
     }
 
-    @GetMapping("/editar/{id}")
+    @GetMapping("/excluir-cliente/{id}")
+    public String excluirCliente(@PathVariable("id") Long id) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid cliente Id:" + id));
+
+        // Registrar ação
+        adminLogService.registrarAcao(cliente, "Excluiu um cliente");
+        clienteRepository.deleteById(id);
+
+        return "redirect:/admin/list-clientes";
+    }
+
+    @GetMapping("/excluir-cuidador/{id}")
+    public String excluirCuidador(@PathVariable("id") Long id) {
+        Cuidador cuidador = cuidadorRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid cuidador Id:" + id));
+        // Registrar ação
+        adminLogService.registrarAcao(cuidador, "Excluiu um cuidador");
+        cuidadorRepository.deleteById(id);
+
+        return "redirect:/admin/list-cuidadores";
+    }
+
+    @GetMapping("/editar-admin/{id}")
     public ModelAndView editar(@PathVariable("id") Long id) {
-        ModelAndView mv = new ModelAndView("admin/editar");
+        ModelAndView mv = new ModelAndView("admin/editar-admin");
         Perfil[] perfilAdmin = { Perfil.ADMIN };
         mv.addObject("perfils", perfilAdmin);
         Genero[] genero = { Genero.MASCULINO, Genero.FEMININO, Genero.OUTRO };
@@ -187,6 +216,104 @@ public class AdminController {
         adminLogService.registrarAcao(admin, "Editou um administrador");
 
         return "redirect:/admin/list-admin";
+    }
+
+    @GetMapping("/editar-cliente/{id}")
+    public ModelAndView editarCliente(@PathVariable("id") Long id) {
+        ModelAndView mv = new ModelAndView("admin/editar-cliente");
+        Perfil[] perfilCliente = { Perfil.CLIENTE };
+        mv.addObject("perfils", perfilCliente);
+        Genero[] genero = { Genero.MASCULINO, Genero.FEMININO, Genero.OUTRO };
+        mv.addObject("generos", genero);
+        mv.addObject("usuario", clienteRepository.findById(id).orElse(null));
+        return mv;
+    }
+
+    @PostMapping("/editar-cliente")
+    public String editarCliente(@ModelAttribute Cliente cliente, @RequestParam("file") MultipartFile imagem) {
+        Cliente existingCliente = clienteRepository.findById(cliente.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid cliente Id:" + cliente.getId()));
+
+        // Manter a senha existente se o campo senha estiver vazio
+        if (cliente.getSenha() == null || cliente.getSenha().isEmpty()) {
+            cliente.setSenha(existingCliente.getSenha());
+        }
+
+        // Preservar o caminho da imagem se não for alterado
+        if (!imagem.isEmpty()) {
+            if (UploadUtil.fazerUploadImagem(imagem)) {
+                // Remover a imagem antiga se não for a imagem padrão
+                if (!existingCliente.getImagem().equals("static/images/imagem-uploads/images.png")) {
+                    String caminhoImagemAntiga = "C:\\Users\\Luizb\\OneDrive\\Documentos\\WorkspaceVsCode\\ProjetoThymeleafSpring\\cuidaidoso\\src\\main\\resources\\"
+                            + existingCliente.getImagem();
+                    UploadUtil.removerImagem(caminhoImagemAntiga);
+                }
+                cliente.setImagem("static/images/imagem-uploads/" + imagem.getOriginalFilename());
+            } else {
+                cliente.setImagem(existingCliente.getImagem());
+            }
+        } else {
+            cliente.setImagem(existingCliente.getImagem());
+        }
+        // Preservar o endereço existente
+        cliente.setEndereco(existingCliente.getEndereco());
+
+        cliente.setPerfil(Perfil.CLIENTE);
+        clienteRepository.save(cliente);
+
+        // Registrar ação
+        adminLogService.registrarAcao(cliente, "Editou um cliente");
+
+        return "redirect:/admin/list-clientes";
+    }
+
+    @GetMapping("/editar-cuidador/{id}")
+    public ModelAndView editarCuidador(@PathVariable("id") Long id) {
+        ModelAndView mv = new ModelAndView("admin/editar-cuidador");
+        Perfil[] perfilCuidador = { Perfil.CUIDADOR };
+        mv.addObject("perfils", perfilCuidador);
+        Genero[] genero = { Genero.MASCULINO, Genero.FEMININO, Genero.OUTRO };
+        mv.addObject("generos", genero);
+        mv.addObject("usuario", cuidadorRepository.findById(id).orElse(null));
+        return mv;
+    }
+
+    @PostMapping("/editar-cuidador")
+    public String editarCuidador(@ModelAttribute Cuidador cuidador, @RequestParam("file") MultipartFile imagem) {
+        Cuidador existingCuidador = cuidadorRepository.findById(cuidador.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid cuidador Id:" + cuidador.getId()));
+
+        // Manter a senha existente se o campo senha estiver vazio
+        if (cuidador.getSenha() == null || cuidador.getSenha().isEmpty()) {
+            cuidador.setSenha(existingCuidador.getSenha());
+        }
+
+        // Preservar o caminho da imagem se não for alterado
+        if (!imagem.isEmpty()) {
+            if (UploadUtil.fazerUploadImagem(imagem)) {
+                // Remover a imagem antiga se não for a imagem padrão
+                if (!existingCuidador.getImagem().equals("static/images/imagem-uploads/images.png")) {
+                    String caminhoImagemAntiga = "C:\\Users\\Luizb\\OneDrive\\Documentos\\WorkspaceVsCode\\ProjetoThymeleafSpring\\cuidaidoso\\src\\main\\resources\\"
+                            + existingCuidador.getImagem();
+                    UploadUtil.removerImagem(caminhoImagemAntiga);
+                }
+                cuidador.setImagem("static/images/imagem-uploads/" + imagem.getOriginalFilename());
+            } else {
+                cuidador.setImagem(existingCuidador.getImagem());
+            }
+        } else {
+            cuidador.setImagem(existingCuidador.getImagem());
+        }
+
+        // Preservar o endereço existente
+        cuidador.setEndereco(existingCuidador.getEndereco());
+
+        cuidador.setPerfil(Perfil.CUIDADOR); // Garantir que o perfil seja CUIDADOR
+        cuidadorRepository.save(cuidador);
+
+        // Registrar ação
+        adminLogService.registrarAcao(cuidador, "Editou um cuidador");
+        return "redirect:/admin/list-cuidadores";
     }
 
 }

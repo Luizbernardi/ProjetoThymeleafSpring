@@ -39,8 +39,8 @@
                         <td class="border px-4 py-2" th:text="${admin.genero}"></td>
                         <td class="border px-4 py-2" th:text="${admin.perfil}"></td>
                         <td class="border px-4 py-2">
-                            <a th:href="@{/admin/editar/{id}(id=${admin.id})}" class="text-orange-500">Editar</a>
-                            <a th:href="@{/admin/excluir/{id}(id=${admin.id})}" class="text-red-500">Excluir</a>
+                            <a th:href="@{/admin/editar-admin/{id}(id=${admin.id})}" class="text-orange-500">Editar</a>
+                            <a th:href="@{/admin/excluir-admin/{id}(id=${admin.id})}" class="text-red-500">Excluir</a>
                         </td>
                     </tr>
                 </tbody>

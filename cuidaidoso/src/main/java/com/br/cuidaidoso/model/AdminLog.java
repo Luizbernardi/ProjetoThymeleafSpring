@@ -32,5 +32,6 @@ public class AdminLog {
     @JoinColumn(name = "admin_id")
     private Admin admin;
 
+    private String descricao;
 
 }
