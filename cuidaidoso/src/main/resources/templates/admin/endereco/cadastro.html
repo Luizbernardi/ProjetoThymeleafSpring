@@ -31,31 +31,7 @@
     <footer class="flex-shrink-0" th:replace="~{fragments/footer :: footerImports}"></footer>
 
     <!-- Função para Buscar CEP -->
-    <script>
-        function buscarCEP() {
-            const cep = document.getElementById('cep').value;
-            console.log("CEP digitado:", cep); // Log do CEP digitado
-            if (cep.length === 8) {
-                fetch(`https://viacep.com.br/ws/${cep}/json/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log("Dados retornados:", data); // Log dos dados retornados
-                        if (!data.erro) {
-                            document.getElementById('uf').value = data.uf;
-                            document.getElementById('estado').value = data.localidade;
-                            document.getElementById('localidade').value = data.localidade;
-                            document.getElementById('bairro').value = data.bairro;
-                        } else {
-                            alert("CEP não encontrado.");
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Erro ao buscar o CEP:", error);
-                        alert("Erro ao buscar o CEP.");
-                    });
-            }
-        }
-    </script>
+    <script th:replace="~{fragments/script-buscacep :: buscaCepImports}"></script>
 </body>
 
 
