@@ -21,7 +21,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class chamado {
+public class Chamado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,7 +33,7 @@ public class chamado {
 
     private LocalDate dataFechamento;
 
-    private String observacao;
+    private String descricao;
 
     private Status status;
 

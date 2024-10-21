@@ -8,17 +8,30 @@
     <header th:replace="~{fragments/header :: headerImports}"></header>
     <main class="mx-auto my-auto">
         <p class="space-y-2 font-bold">Abertura de Chamado</p>
-        <form method="post" enctype="multipart/form-data" class="grid">
+        <form method="post" enctype="multipart/form-data" class="grid" th:object="${chamado}">
             <div class="space-y-2">
-                <label for="nome" class="input input-bordered flex items-center gap-2 custom-label">
-                    <input type="text" class="grow" autocomplete="off" id="nome" placeholder="Titulo chamado">
+                <label for="titulo" class="input input-bordered flex items-center gap-2 custom-label">
+                    <input type="text" class="grow" autocomplete="off" id="titulo" placeholder="Titulo chamado"
+                        th:field="*{titulo}">
                 </label>
-                <!-- <label for="genero" class="flex items-center gap-2 custom-label">
-                    <select name="genero" id="genero" class="select select-bordered w-full custom-select">
-                        <option value="" selected>Gênero</option>
-                        <option></option>
+                <label for="status" class="flex items-center gap-2 custom-label">
+                    <select name="status" id="status" th:field="*{status}"
+                        class="select select-bordered w-full custom-select">
+                        <option value="" selected>Status</option>
+                        <option th:each="statuschamados : ${statusChamado}" th:text="${statuschamados}"
+                            th:value="${statuschamados}">
+                        </option>
                     </select>
-                </label> -->
+                </label>
+                <label for="prioridade" class="flex items-center gap-2 custom-label">
+                    <select name="prioridade" id="prioridade" th:field="*{prioridade}"
+                        class="select select-bordered w-full custom-select">
+                        <option value="" selected>Prioridade</option>
+                        <option th:each="prioridadechamados : ${prioridade}" th:text="${prioridadechamados}"
+                            th:value="${prioridadechamados}">
+                        </option>
+                    </select>
+                </label>
                 <div class="flex justify-center space-x-4 mt-8">
                     <button class="bg-greenlight px-6 py-2 rounded-md text-black font-bold"
                         type="submit">Cadastrar</button>
