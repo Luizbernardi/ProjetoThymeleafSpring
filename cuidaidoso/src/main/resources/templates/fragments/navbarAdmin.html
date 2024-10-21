@@ -12,7 +12,27 @@
                 </svg>Minha conta
             </button>
         </div>
-        <div class="relative flex items-center">
+        <div class="flex items-center">
+            <button id="dropdownButtonChamados" class="btn btn-ghost flex justify-center w-full">
+                <svg viewBox="0 0 24 24" width="2em" height="2em" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M7.99988 6C7.99988 3.79086 9.79074 2 11.9999 2H16.9999C19.209 2 20.9999 3.79086 20.9999 6V16.0514C20.9999 17.6802 19.157 18.626 17.8337 17.6762L15.9999 16.3601V20.0514C15.9999 21.6802 14.157 22.626 12.8337 21.6762L9.49988 19.2835L6.16603 21.6762C4.84275 22.626 2.99988 21.6802 2.99988 20.0514V10C2.99988 7.79086 4.79074 6 6.99988 6H7.99988ZM9.99988 6C9.99988 4.89543 10.8953 4 11.9999 4H16.9999C18.1044 4 18.9999 4.89543 18.9999 6V16.0514L15.9999 13.8983V10C15.9999 7.79086 14.209 6 11.9999 6H9.99988ZM6.99988 8C5.89531 8 4.99988 8.89543 4.99988 10V20.0514L8.33373 17.6587C9.0307 17.1585 9.96906 17.1585 10.666 17.6587L13.9999 20.0514V10C13.9999 8.89543 13.1044 8 11.9999 8H6.99988Z"
+                            fill="#000000"></path>
+                    </g>
+                </svg>Chamados
+            </button>
+            <div id="dropdownMenuChamados"
+                class="hidden absolute mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+                <a th:href="@{/chamado/cadastro}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Cadastrar
+                    Chamado</a>
+                <a th:href="@{/admin/list-chamados}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Listar
+                    chamados </a>
+            </div>
+        </div>
+        <div class=" relative flex items-center">
             <button id="dropdownButtonCuidadores" class="btn btn-ghost flex justify-center w-full">
                 <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 26 26">
                     <path fill="#454545"
@@ -87,9 +107,11 @@
             var isClickInsideCuidadores = document.getElementById('dropdownButtonCuidadores').contains(event.target);
             var isClickInsideClientes = document.getElementById('dropdownButtonClientes').contains(event.target);
             var isClickInsideAdmins = document.getElementById('dropdownButtonAdmins').contains(event.target);
+            var isClickInsideChamados = document.getElementById('dropdownButtonChamados').contains(event.target);
             var dropdownMenuCuidadores = document.getElementById('dropdownMenuCuidadores');
             var dropdownMenuClientes = document.getElementById('dropdownMenuClientes');
             var dropdownMenuAdmins = document.getElementById('dropdownMenuAdmins');
+            var dropdownMenuChamados = document.getElementById('dropdownMenuChamados');
 
             if (!isClickInsideCuidadores) {
                 dropdownMenuCuidadores.classList.add('hidden');
@@ -101,6 +123,10 @@
 
             if (!isClickInsideAdmins) {
                 dropdownMenuAdmins.classList.add('hidden');
+            }
+
+            if (!isClickInsideChamados) {
+                dropdownMenuChamados.classList.add('hidden');
             }
         });
 
@@ -115,9 +141,16 @@
             var dropdownMenu = document.getElementById('dropdownMenuClientes');
             dropdownMenu.classList.toggle('hidden');
         });
+
         document.getElementById('dropdownButtonAdmins').addEventListener('click', function (event) {
             event.stopPropagation();
             var dropdownMenu = document.getElementById('dropdownMenuAdmins');
+            dropdownMenu.classList.toggle('hidden');
+        });
+
+        document.getElementById('dropdownButtonChamados').addEventListener('click', function (event) {
+            event.stopPropagation();
+            var dropdownMenu = document.getElementById('dropdownMenuChamados');
             dropdownMenu.classList.toggle('hidden');
         });
     </script>
