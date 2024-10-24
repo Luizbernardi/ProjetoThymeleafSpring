@@ -28,4 +28,7 @@ public class Cuidador extends User {
     @OneToMany(mappedBy = "cuidador")
     private List<CuidadorLog> cuidadorLog = new ArrayList<>();
 
+    @OneToMany(mappedBy = "cuidador")
+    private List<Chamado> chamados = new ArrayList<>();
+
 }

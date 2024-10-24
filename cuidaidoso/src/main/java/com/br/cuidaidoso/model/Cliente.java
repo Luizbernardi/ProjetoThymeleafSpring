@@ -23,4 +23,9 @@ public class Cliente extends User {
 
     @ManyToOne
     private Endereco endereco;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Chamado> chamados = new ArrayList<>();
+
+    
 }
