@@ -6,6 +6,8 @@ import com.br.cuidaidoso.enums.Prioridade;
 import com.br.cuidaidoso.enums.Status;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,9 +36,11 @@ public class Chamado {
     private LocalDate dataFechamento;
 
     private String descricao;
-
+    
+    @Enumerated(EnumType.STRING)
     private Status status;
-
+    
+    @Enumerated(EnumType.STRING)
     private Prioridade prioridade;
 
     @ManyToOne

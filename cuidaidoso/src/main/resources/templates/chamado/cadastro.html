@@ -8,11 +8,15 @@
     <header th:replace="~{fragments/header :: headerImports}"></header>
     <main class="mx-auto my-auto">
         <p class="space-y-2 font-bold">Abertura de Chamado</p>
-        <form method="post" enctype="multipart/form-data" class="grid" th:object="${chamado}">
+        <form method="post" enctype="multipart/form-data" th:action="@{/chamado/cadastro-chamado}" class="grid" th:object="${chamado}">
             <div class="space-y-2">
                 <label for="titulo" class="input input-bordered flex items-center gap-2 custom-label">
                     <input type="text" class="grow" autocomplete="off" id="titulo" placeholder="Titulo chamado"
                         th:field="*{titulo}">
+                </label>
+                <label for="descricao" class="input input-bordered flex items-center gap-2 custom-label">
+                    <input type="text" class="grow" autocomplete="off" id="descricao" placeholder="Descrição chamado"
+                        th:field="*{descricao}">
                 </label>
                 <label for="status" class="flex items-center gap-2 custom-label">
                     <select name="status" id="status" th:field="*{status}"

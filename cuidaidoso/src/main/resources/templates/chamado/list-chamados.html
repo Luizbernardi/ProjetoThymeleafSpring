@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: headImports}"></head>
+
+<body class="overflow-hidden h-screen flex flex-col">
+
+    <header th:replace="~{fragments/header :: headerImports}"></header>
+    <div class="flex flex-grow overflow-hidden">
+        <nav th:replace="~{fragments/navbarAdmin :: navAdminImports}"></nav>
+        <main class="container mx-auto space-y-12 flex-grow">
+            <h1 class="text-2xl font-bold mb-5">Lista de Chamados</h1>
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr>
+                        <th class="py-2">Data abertura</th>
+                        <th class="py-2">Descrição</th>
+                        <th class="py-2">Prioridade</th>
+                        <th class="py-2">Status</th>
+                        <th class="py-2">Titulo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="chamado : ${chamados}">
+                        <td class="border px-4 py-2" th:text="${chamado.dataAbertura}"></td>
+                        <td class="border px-4 py-2" th:text="${chamado.descricao}"></td>
+                        <td class="border px-4 py-2" th:text="${chamado.prioridade}"></td>
+                        <td class="border px-4 py-2" th:text="${chamado.status}"></td>
+                        <td class="border px-4 py-2" th:text="${chamado.titulo}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </div>
+    <footer th:replace="~{fragments/footer :: footerImports}">
+    </footer>
+
+</body>
+
+</html>
