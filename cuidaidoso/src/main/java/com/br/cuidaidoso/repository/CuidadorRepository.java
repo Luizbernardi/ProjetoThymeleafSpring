@@ -7,5 +7,6 @@ import com.br.cuidaidoso.model.Cuidador;
 
 @Repository
 public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
+    Cuidador findByUsername(String username);
 
 }

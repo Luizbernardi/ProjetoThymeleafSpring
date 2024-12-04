@@ -1,17 +1,5 @@
 package com.br.cuidaidoso.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.br.cuidaidoso.enums.Genero;
 import com.br.cuidaidoso.enums.Perfil;
 import com.br.cuidaidoso.model.Cliente;
@@ -19,8 +7,15 @@ import com.br.cuidaidoso.model.Endereco;
 import com.br.cuidaidoso.model.dto.EnderecoRequest;
 import com.br.cuidaidoso.repository.ClienteRepository;
 import com.br.cuidaidoso.service.ClienteLogService;
+import com.br.cuidaidoso.service.ClienteService;
 import com.br.cuidaidoso.service.EnderecoService;
 import com.br.cuidaidoso.util.UploadUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/cliente")
@@ -34,6 +29,9 @@ public class ClienteController {
 
     @Autowired
     private EnderecoService enderecoService;
+
+    @Autowired
+    private ClienteService clienteService;
 
     @GetMapping("/inicio")
     public ModelAndView home() {
@@ -64,7 +62,7 @@ public class ClienteController {
                 cliente.setImagem("static/images/imagem-uploads/images.png");
             }
             cliente.setPerfil(Perfil.CLIENTE);
-            Cliente clienteSalvo = clienteRepository.save(cliente);
+            clienteService.save(cliente); // Use o serviço para salvar o cliente
             System.out.println("Cliente salvo com sucesso: " + cliente.getNome() + " " + cliente.getImagem());
 
             // Registrar ação
@@ -72,7 +70,7 @@ public class ClienteController {
 
             // Redirecionar para a página de cadastro de endereço
             ModelAndView mvEndereco = new ModelAndView("cliente/endereco/cadastro");
-            mvEndereco.addObject("clienteId", clienteSalvo.getId());
+            mvEndereco.addObject("clienteId", cliente.getId());
             mvEndereco.addObject("endereco", new EnderecoRequest());
             return mvEndereco;
         } catch (Exception e) {
@@ -136,6 +134,8 @@ public class ClienteController {
         // Manter a senha existente se o campo senha estiver vazio
         if (cliente.getSenha() == null || cliente.getSenha().isEmpty()) {
             cliente.setSenha(existingCliente.getSenha());
+        } else {
+            cliente.setSenha(clienteService.encodePassword(cliente.getSenha()));
         }
 
         // Preservar o caminho da imagem se não for alterado
@@ -162,5 +162,4 @@ public class ClienteController {
 
         return "redirect:/admin/list-clientes";
     }
-
 }

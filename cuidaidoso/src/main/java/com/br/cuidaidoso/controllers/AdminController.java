@@ -1,17 +1,5 @@
 package com.br.cuidaidoso.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.br.cuidaidoso.enums.Genero;
 import com.br.cuidaidoso.enums.Perfil;
 import com.br.cuidaidoso.model.Admin;
@@ -23,8 +11,15 @@ import com.br.cuidaidoso.repository.AdminRepository;
 import com.br.cuidaidoso.repository.ClienteRepository;
 import com.br.cuidaidoso.repository.CuidadorRepository;
 import com.br.cuidaidoso.service.AdminLogService;
+import com.br.cuidaidoso.service.AdminService;
 import com.br.cuidaidoso.service.EnderecoService;
 import com.br.cuidaidoso.util.UploadUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/admin")
@@ -44,6 +39,9 @@ public class AdminController {
 
     @Autowired
     private AdminLogService adminLogService;
+
+    @Autowired
+    private AdminService adminService;
 
     @GetMapping("/cadastro")
     public ModelAndView cadastro(Admin admin) {
@@ -68,15 +66,15 @@ public class AdminController {
                 admin.setImagem("static/images/imagem-uploads/images.png");
             }
             admin.setPerfil(Perfil.ADMIN);
-            Admin adminSalvo = adminRepository.save(admin);
+            adminService.save(admin); // Use o serviço para salvar o admin
             System.out.println("Admin salvo com sucesso: " + admin.getNome() + " " + admin.getImagem());
 
             // Registrar ação
-            adminLogService.registrarAcao(adminSalvo, "Cadastro admin");
+            adminLogService.registrarAcao(admin, "Cadastro admin");
 
             // Redirecionar para a página de cadastro de endereço
             ModelAndView mvEndereco = new ModelAndView("admin/endereco/cadastro");
-            mvEndereco.addObject("adminId", adminSalvo.getId());
+            mvEndereco.addObject("adminId", admin.getId());
             mvEndereco.addObject("endereco", new EnderecoRequest());
             return mvEndereco;
         } catch (Exception e) {
@@ -176,7 +174,7 @@ public class AdminController {
         mv.addObject("perfils", perfilAdmin);
         Genero[] genero = { Genero.MASCULINO, Genero.FEMININO, Genero.OUTRO };
         mv.addObject("generos", genero);
-        mv.addObject("usuario", adminRepository.findById(id));
+        mv.addObject("usuario", adminRepository.findById(id).orElse(null));
         return mv;
     }
 
@@ -188,6 +186,8 @@ public class AdminController {
         // Manter a senha existente se o campo senha estiver vazio
         if (admin.getSenha() == null || admin.getSenha().isEmpty()) {
             admin.setSenha(existingAdmin.getSenha());
+        } else {
+            admin.setSenha(adminService.encodePassword(admin.getSenha()));
         }
 
         // Preservar o caminho da imagem se não for alterado
@@ -237,6 +237,8 @@ public class AdminController {
         // Manter a senha existente se o campo senha estiver vazio
         if (cliente.getSenha() == null || cliente.getSenha().isEmpty()) {
             cliente.setSenha(existingCliente.getSenha());
+        } else {
+            cliente.setSenha(adminService.encodePassword(cliente.getSenha()));
         }
 
         // Preservar o caminho da imagem se não for alterado
@@ -286,6 +288,8 @@ public class AdminController {
         // Manter a senha existente se o campo senha estiver vazio
         if (cuidador.getSenha() == null || cuidador.getSenha().isEmpty()) {
             cuidador.setSenha(existingCuidador.getSenha());
+        } else {
+            cuidador.setSenha(adminService.encodePassword(cuidador.getSenha()));
         }
 
         // Preservar o caminho da imagem se não for alterado
