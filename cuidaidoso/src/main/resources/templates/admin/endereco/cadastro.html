@@ -3,36 +3,58 @@
 
 <head th:replace="~{fragments/head :: headImports}"></head>
 
-<body class="flex flex-col min-h-screen bg-[url('/images/bgpark.png')]">
+<body class="flex flex-col min-h-screen bg-[url('/images/bgpark.png')] bg-cover bg-no-repeat">
 
     <header th:replace="~{fragments/header :: headerImports}"></header>
-    <main class="mx-auto my-auto">
-        <h1>Cadastro de Endereço</h1>
-        <form th:action="@{/admin/cadastro-endereco}" method="post">
-            <input type="hidden" th:value="${adminId}" name="adminId">
-            <label for="cep">CEP:</label>
-            <input type="text" id="cep" name="cep" maxlength="8" onblur="buscarCEP()" required><br>
+    <main class="flex flex-col items-center justify-center flex-grow">
+        <div class="bg-white bg-opacity-80 p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Cadastro de Endereço</h1>
+            <form th:action="@{/admin/cadastro-endereco}" method="post" class="space-y-4">
+                <input type="hidden" th:value="${adminId}" name="adminId">
 
-            <label for="uf">UF:</label>
-            <input type="text" id="uf" name="uf" required><br>
+                <div>
+                    <label for="cep" class="block text-gray-700">CEP:</label>
+                    <input type="text" id="cep" name="cep" maxlength="8" onblur="buscarCEP()" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500">
+                </div>
 
-            <label for="estado">Estado:</label>
-            <input type="text" id="estado" name="estado" required><br>
+                <div>
+                    <label for="uf" class="block text-gray-700">UF:</label>
+                    <input type="text" id="uf" name="uf" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500">
+                </div>
 
-            <label for="localidade">Localidade:</label>
-            <input type="text" id="localidade" name="localidade" required><br>
+                <div>
+                    <label for="estado" class="block text-gray-700">Estado:</label>
+                    <input type="text" id="estado" name="estado" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500">
+                </div>
 
-            <label for="bairro">Bairro:</label>
-            <input type="text" id="bairro" name="bairro" required><br>
+                <div>
+                    <label for="localidade" class="block text-gray-700">Localidade:</label>
+                    <input type="text" id="localidade" name="localidade" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500">
+                </div>
 
-            <button type="submit">Cadastrar</button>
-        </form>
+                <div>
+                    <label for="bairro" class="block text-gray-700">Bairro:</label>
+                    <input type="text" id="bairro" name="bairro" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500">
+                </div>
+
+                <div class="flex justify-center">
+                    <button type="submit"
+                        class="w-full bg-teal-500 text-white py-2 rounded-lg hover:bg-teal-600 focus:outline-none focus:bg-teal-600">
+                        Cadastrar
+                    </button>
+                </div>
+            </form>
+        </div>
     </main>
     <footer class="flex-shrink-0" th:replace="~{fragments/footer :: footerImports}"></footer>
 
     <!-- Função para Buscar CEP -->
     <script th:replace="~{fragments/script-buscacep :: buscaCepImports}"></script>
 </body>
-
 
 </html>

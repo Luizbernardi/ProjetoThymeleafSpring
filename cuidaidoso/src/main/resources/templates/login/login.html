@@ -34,6 +34,9 @@
         <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
             <h1 class="text-3xl font-bold text-center text-teal-500 mb-6">Login</h1>
             <form th:action="@{/login}" method="post">
+                <div th:if="${param.error}" class="mb-4 text-red-500 text-center">
+                    Usuário ou senha incorretos. Tente novamente.
+                </div>
                 <div class="mb-4">
                     <label for="username" class="block text-gray-700">Username</label>
                     <input type="text" id="username" name="username" placeholder="Username" required
