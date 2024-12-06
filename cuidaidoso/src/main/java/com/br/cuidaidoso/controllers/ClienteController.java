@@ -59,7 +59,7 @@ public class ClienteController {
             if (UploadUtil.fazerUploadImagem(imagem)) {
                 cliente.setImagem("static/images/imagem-uploads/" + imagem.getOriginalFilename());
             } else {
-                cliente.setImagem("static/images/imagem-uploads/images.png");
+                cliente.setImagem("static/images/imagem-uploads/ImagemPerfilUser.png");
             }
             cliente.setPerfil(Perfil.CLIENTE);
             clienteService.save(cliente); // Use o serviço para salvar o cliente

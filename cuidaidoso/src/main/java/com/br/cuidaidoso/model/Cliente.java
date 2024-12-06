@@ -3,6 +3,7 @@ package com.br.cuidaidoso.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -18,7 +19,7 @@ import lombok.Setter;
 @Entity
 public class Cliente extends User {
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClienteLog> clienteLog = new ArrayList<>();
 
     @ManyToOne

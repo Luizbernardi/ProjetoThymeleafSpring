@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: headImports}"></head>
+
+<body class="overflow-hidden h-screen flex flex-col justify-center bg-gray-100">
+    <header th:replace="~{fragments/header :: headerImports}"></header>
+    <main class="mx-auto my-auto p-8 bg-white bg-opacity-80 rounded-lg shadow-lg max-w-md text-center">
+        <h1 class="text-3xl font-bold mb-6 text-gray-800">Você foi deslogado</h1>
+        <p class="mb-6">Você saiu da sua conta com sucesso.</p>
+        <a href="/login"
+            class="bg-teal-500 text-white px-6 py-2 rounded-md font-bold hover:bg-teal-600 focus:outline-none focus:bg-teal-600">Login</a>
+        <a href="/home"
+            class="bg-gray-500 text-white px-6 py-2 rounded-md font-bold hover:bg-gray-600 focus:outline-none focus:bg-gray-600 ml-4">Home</a>
+    </main>
+    <footer th:replace="~{fragments/footer :: footerImports}"></footer>
+</body>
+
+</html>

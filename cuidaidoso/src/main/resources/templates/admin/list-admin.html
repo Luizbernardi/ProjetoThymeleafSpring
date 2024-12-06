@@ -3,52 +3,53 @@
 
 <head th:replace="~{fragments/head :: headImports}"></head>
 
-<body class="overflow-hidden h-screen flex flex-col">
+<body class="overflow-hidden h-screen flex flex-col bg-gray-100">
 
-    <header th:replace="~{fragments/header :: headerImports}"></header>
-    <div class="flex flex-grow overflow-hidden">
+    <header th:replace="~{fragments/header :: headerImports}" class="absolute top-0 left-0 w-full"></header>
+    <div class="flex flex-grow overflow-hidden pt-20">
         <nav th:replace="~{fragments/navbarAdmin :: navAdminImports}"></nav>
-        <main class="container mx-auto space-y-12 flex-grow">
-            <h1 class="text-2xl font-bold mb-5">Lista de Administradores</h1>
-            <table class="min-w-full bg-white">
-                <thead>
-                    <tr>
-                        <th class="py-2">ID</th>
-                        <th class="py-2">Nome</th>
-                        <th class="py-2">Email</th>
-                        <th class="py-2">Username</th>
-                        <th class="py-2">CPF</th>
-                        <th class="py-2">Telefone</th>
-                        <th class="py-2">Data de Nascimento</th>
-                        <th class="py-2">Idade</th>
-                        <th class="py-2">Gênero</th>
-                        <th class="py-2">Perfil</th>
-                        <th class="py-2">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="admin : ${admins}">
-                        <td class="border px-4 py-2" th:text="${admin.id}"></td>
-                        <td class="border px-4 py-2" th:text="${admin.nome}"></td>
-                        <td class="border px-4 py-2" th:text="${admin.email}"></td>
-                        <td class="border px-4 py-2" th:text="${admin.username}"></td>
-                        <td class="border px-4 py-2" th:text="${admin.cpf}"></td>
-                        <td class="border px-4 py-2" th:text="${admin.telefone}"></td>
-                        <td class="border px-4 py-2" th:text="${admin.dataNascimento}"></td>
-                        <td class="border px-4 py-2" th:text="${admin.idade}"></td>
-                        <td class="border px-4 py-2" th:text="${admin.genero}"></td>
-                        <td class="border px-4 py-2" th:text="${admin.perfil}"></td>
-                        <td class="border px-4 py-2">
-                            <a th:href="@{/admin/editar-admin/{id}(id=${admin.id})}" class="text-orange-500">Editar</a>
-                            <a th:href="@{/admin/excluir-admin/{id}(id=${admin.id})}" class="text-red-500">Excluir</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <main class="container mx-auto space-y-12 flex-grow p-6 overflow-y-auto">
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white rounded-lg shadow-lg">
+                    <thead>
+                        <tr class="bg-teal-500 bg-opacity-50 text-white">
+                            <th class="py-3 px-4 text-left"></th>
+                            <th class="py-3 px-4 text-left">Nome</th>
+                            <th class="py-3 px-4 text-left">Email</th>
+                            <th class="py-3 px-4 text-left">Username</th>
+                            <th class="py-3 px-4 text-left">Telefone</th>
+                            <th class="py-3 px-4 text-left">Data de Nascimento</th>
+                            <th class="py-3 px-4 text-left">Idade</th>
+                            <th class="py-3 px-4 text-left">Gênero</th>
+                            <th class="py-3 px-4 text-left">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="admin : ${admins}" class="border-b hover:bg-gray-100">
+                            <td class="border px-4 py-2">
+                                <img src="/images/imagem-uploads/ImagemPerfilUser.png" alt="Imagem do Administrador"
+                                    class="w-16 h-16 rounded-full object-cover">
+                            </td>
+                            <td class="border px-4 py-2" th:text="${admin.nome}"></td>
+                            <td class="border px-4 py-2" th:text="${admin.email}"></td>
+                            <td class="border px-4 py-2" th:text="${admin.username}"></td>
+                            <td class="border px-4 py-2" th:text="${admin.telefone}"></td>
+                            <td class="border px-4 py-2" th:text="${admin.dataNascimento}"></td>
+                            <td class="border px-4 py-2" th:text="${admin.idade}"></td>
+                            <td class="border px-4 py-2" th:text="${admin.genero}"></td>
+                            <td class="border px-4 py-2">
+                                <a th:href="@{/admin/editar-admin/{id}(id=${admin.id})}"
+                                    class="text-orange-500 hover:underline">Editar</a>
+                                <a th:href="@{/admin/excluir-admin/{id}(id=${admin.id})}"
+                                    class="text-red-500 hover:underline">Excluir</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </main>
     </div>
-    <footer th:replace="~{fragments/footer :: footerImports}">
-    </footer>
+    <footer th:replace="~{fragments/footer :: footerImports}" class="absolute bottom-0 left-0 w-full"></footer>
 
 </body>
 

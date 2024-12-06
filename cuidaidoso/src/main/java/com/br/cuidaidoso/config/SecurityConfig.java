@@ -32,6 +32,10 @@ public class SecurityConfig {
                         .successHandler(authenticationSuccessHandler())
                         .permitAll())
                 .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
                         .permitAll());
         return http.build();
     }
@@ -54,6 +58,7 @@ public class SecurityConfig {
             } else {
                 response.sendRedirect("/home");
             }
+
         };
     }
 
