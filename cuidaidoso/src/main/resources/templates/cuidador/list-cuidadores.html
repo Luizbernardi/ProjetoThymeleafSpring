@@ -6,9 +6,30 @@
 <body class="overflow-hidden h-screen flex flex-col bg-gray-100">
 
     <header th:replace="~{fragments/header :: headerImports}" class="absolute top-0 left-0 w-full"></header>
+
     <div class="flex flex-grow overflow-hidden pt-20">
         <nav th:replace="~{fragments/navbar :: navImports}"></nav>
-        <main class="container mx-auto space-y-12 flex-grow p-6 overflow-y-auto">
+
+        <main class="container mx-auto space-y-6 flex-grow p-6 overflow-y-auto">
+            <!-- Filtros -->
+            <div class="bg-white p-4 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold mb-4">Filtrar por:</h2>
+                <form class="flex flex-wrap items-center space-x-4">
+                    <input type="text" placeholder="Nome" class="border rounded-lg p-2 flex-grow">
+                    <input type="text" placeholder="Formação" class="border rounded-lg p-2 flex-grow">
+                    <input type="text" placeholder="Localidade" class="border rounded-lg p-2 flex-grow">
+                    <input type="number" placeholder="Idade" class="border rounded-lg p-2 w-20">
+                    <select class="border rounded-lg p-2 w-40">
+                        <option value="">Gênero</option>
+                        <option value="MASCULINO">Masculino</option>
+                        <option value="FEMININO">Feminino</option>
+                        <option value="OUTRO">Outro</option>
+                    </select>
+                    <button type="submit" class="bg-teal-500 text-white rounded-lg px-4 py-2">Aplicar Filtros</button>
+                </form>
+            </div>
+
+            <!-- Tabela -->
             <div class="overflow-x-auto">
                 <table class="min-w-full bg-white rounded-lg shadow-lg">
                     <thead>
@@ -36,10 +57,15 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- Paginação -->
+            <div class="flex justify-between items-center mt-4">
+                <button class="bg-gray-200 rounded-lg px-4 py-2" disabled>&laquo; Anterior</button>
+                <span class="text-gray-700">Página 1 de 10</span>
+                <button class="bg-teal-500 text-white rounded-lg px-4 py-2">Próxima &raquo;</button>
+            </div>
         </main>
     </div>
-    <footer th:replace="~{fragments/footer :: footerImports}" class="absolute bottom-0 left-0 w-full"></footer>
-
 </body>
 
 </html>
