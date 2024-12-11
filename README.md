@@ -38,19 +38,22 @@ git clone https://github.com/seu-usuario/cuidaidoso.git
 cd cuidaidoso
 ```
 
-2. Compile o projeto usando Maven:
+2. Abra o Springboot Dashboard no seu editor de texto
+- Selecione o App **cuidaidoso** e clique em **Run**.
+
+3. Compile o projeto usando Maven:
 
 ```bash
 mvn clean install
 ```
 
-3. Inicie a aplicação:
+4. Inicie a aplicação:
 
 ```bash
 mvn spring-boot:run
 ```
 
-4. Acesse a aplicação no navegador:
+5. Acesse a aplicação no navegador:
 
 ```
 http://localhost:8080
