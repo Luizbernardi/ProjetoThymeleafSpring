@@ -1,4 +1,4 @@
-# Projeto CuidaIdoso
+# Projeto Cuidaidoso
 
 Este é um projeto Spring Boot com Thymeleaf para gerenciar cuidadores e clientes.
 
