@@ -18,7 +18,13 @@
 <body class="bg-[#3b3b3b] bg-opacity-20 shadow-sm">
     <header>
         <nav class="fixed z-50 flex items-center justify-between h-20 w-full p-5 bg-[#3b3b3b] bg-opacity-20 shadow-sm">
-            <div> <a th:href="@{/home}"><img class="w-48 mx-24" src="/images/Logo.png" /></a> </div>
+            <div> 
+                <a th:href="@{/home}"><img class="w-48 mx-24" src="/images/Logo.png" /></a> 
+            </div>
+            <div class="flex items-center space-x-4 mr-24">
+                <a th:href="@{/home}" class="text-black text-2xl font-bold">Home</a>
+                <a th:href="@{/login}" class="text-black text-2xl font-bold">Login</a>
+            </div>
         </nav>
     </header>
     <main>
